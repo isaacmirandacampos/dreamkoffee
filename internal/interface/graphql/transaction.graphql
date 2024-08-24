@@ -1,0 +1,18 @@
+type Transaction {
+  id: ID!
+  amount: Float!
+  description: String!
+  createdAt: String!
+}
+
+type Query {
+  transactions: [Transaction!]!
+}
+
+input NewTransaction {
+  amount: Float!
+  description: String!
+}
+type Mutation {
+  createTransaction(input: NewTransaction!): Transaction!
+}
