@@ -1,0 +1,21 @@
+scalar Decimal
+
+type Expense {
+  id: Int!
+  price: Decimal!
+  name: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  expenses: [Expense!]!
+}
+
+input NewExpense {
+  price: Decimal!
+  name: String!
+}
+type Mutation {
+  createExpense(input: NewExpense!): Expense!
+}

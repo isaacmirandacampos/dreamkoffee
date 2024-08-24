@@ -1,7 +1,11 @@
 package graphql
 
-import "github.com/isaacmirandacampos/finkofee/internal/interface/graphql/model"
+import (
+	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+)
 
 type Resolver struct {
-	ListTransactions []*model.Transaction
+	Conn         *persistence.Queries
+	ListExpenses []*model.Expense
 }

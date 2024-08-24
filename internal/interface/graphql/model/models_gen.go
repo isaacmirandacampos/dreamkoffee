@@ -2,20 +2,25 @@
 
 package model
 
+import (
+	"github.com/shopspring/decimal"
+)
+
+type Expense struct {
+	ID        int             `json:"id"`
+	Price     decimal.Decimal `json:"price"`
+	Name      string          `json:"name"`
+	CreatedAt string          `json:"createdAt"`
+	UpdatedAt string          `json:"updatedAt"`
+}
+
 type Mutation struct {
 }
 
-type NewTransaction struct {
-	Amount      float64 `json:"amount"`
-	Description string  `json:"description"`
+type NewExpense struct {
+	Price decimal.Decimal `json:"price"`
+	Name  string          `json:"name"`
 }
 
 type Query struct {
-}
-
-type Transaction struct {
-	ID          string  `json:"id"`
-	Amount      float64 `json:"amount"`
-	Description string  `json:"description"`
-	CreatedAt   string  `json:"createdAt"`
 }
