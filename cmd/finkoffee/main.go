@@ -26,8 +26,8 @@ func main() {
 	conn := persistence.New(connection)
 
 	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: &graphql.Resolver{
-		Conn:         conn,
-		ListExpenses: []*model.Expense{},
+		Conn:     conn,
+		Expenses: []*model.Expense{},
 	}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))

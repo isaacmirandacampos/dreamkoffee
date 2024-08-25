@@ -8,8 +8,8 @@ import (
 
 type Expense struct {
 	ID        int             `json:"id"`
-	Price     decimal.Decimal `json:"price"`
 	Name      string          `json:"name"`
+	Price     decimal.Decimal `json:"price"`
 	CreatedAt string          `json:"createdAt"`
 	UpdatedAt string          `json:"updatedAt"`
 }
@@ -18,9 +18,14 @@ type Mutation struct {
 }
 
 type NewExpense struct {
-	Price decimal.Decimal `json:"price"`
 	Name  string          `json:"name"`
+	Price decimal.Decimal `json:"price"`
 }
 
 type Query struct {
+}
+
+type UpdateExpense struct {
+	Name  string          `json:"name"`
+	Price decimal.Decimal `json:"price"`
 }

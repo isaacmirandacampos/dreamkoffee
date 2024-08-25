@@ -6,6 +6,6 @@ import (
 )
 
 type Resolver struct {
-	Conn         *persistence.Queries
-	ListExpenses []*model.Expense
+	Conn     *persistence.Queries
+	Expenses []*model.Expense
 }

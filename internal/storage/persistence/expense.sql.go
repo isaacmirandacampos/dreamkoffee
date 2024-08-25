@@ -89,3 +89,29 @@ func (q *Queries) ListExpenses(ctx context.Context) ([]Expense, error) {
 	}
 	return items, nil
 }
+
+const updateExpense = `-- name: UpdateExpense :one
+UPDATE expenses 
+SET name = $1, price = $2 
+WHERE id = $3 and deleted_at is null RETURNING id, price, name, created_at, updated_at, deleted_at
+`
+
+type UpdateExpenseParams struct {
+	Name  string          `db:"name" json:"name"`
+	Price decimal.Decimal `db:"price" json:"price"`
+	ID    int32           `db:"id" json:"id"`
+}
+
+func (q *Queries) UpdateExpense(ctx context.Context, arg UpdateExpenseParams) (Expense, error) {
+	row := q.db.QueryRowContext(ctx, updateExpense, arg.Name, arg.Price, arg.ID)
+	var i Expense
+	err := row.Scan(
+		&i.ID,
+		&i.Price,
+		&i.Name,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}

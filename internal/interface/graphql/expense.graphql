@@ -2,20 +2,28 @@ scalar Decimal
 
 type Expense {
   id: Int!
-  price: Decimal!
   name: String!
+  price: Decimal!
   createdAt: String!
   updatedAt: String!
 }
 
 type Query {
-  expenses: [Expense!]!
+  listExpense: [Expense!]!
+  getExpense(id: Int!): Expense!
 }
 
 input NewExpense {
-  price: Decimal!
   name: String!
+  price: Decimal!
 }
+
+input UpdateExpense {
+  name: String!
+  price: Decimal!
+}
+
 type Mutation {
   createExpense(input: NewExpense!): Expense!
+  updateExpense(id: Int!, input: UpdateExpense!): Expense!
 }

@@ -6,7 +6,6 @@ package graphql
 
 import (
 	"context"
-	"log"
 
 	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
@@ -14,9 +13,6 @@ import (
 
 // CreateExpense is the resolver for the createExpense field.
 func (r *mutationResolver) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
-	// resolve unexpected type json.Number for Decimal
-	log.Printf("input.Price: %T", input.Price)
-	log.Printf("input.Price: %v", input.Price)
 	expense := &model.Expense{
 		Name:  input.Name,
 		Price: input.Price,
@@ -40,8 +36,35 @@ func (r *mutationResolver) CreateExpense(ctx context.Context, input model.NewExp
 	return newExpense, nil
 }
 
-// Expenses is the resolver for the expenses field.
-func (r *queryResolver) Expenses(ctx context.Context) ([]*model.Expense, error) {
+// UpdateExpense is the resolver for the updateExpense field.
+func (r *mutationResolver) UpdateExpense(ctx context.Context, id int, input model.UpdateExpense) (*model.Expense, error) {
+	expense := &model.Expense{
+		ID:    id,
+		Name:  input.Name,
+		Price: input.Price,
+	}
+
+	updated, err := r.Conn.UpdateExpense(ctx, persistence.UpdateExpenseParams{
+		ID:    int32(expense.ID),
+		Name:  expense.Name,
+		Price: expense.Price,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Expense{
+		ID:        int(updated.ID),
+		Name:      updated.Name,
+		Price:     updated.Price,
+		CreatedAt: updated.CreatedAt.String(),
+		UpdatedAt: updated.UpdatedAt.String(),
+	}, nil
+}
+
+// ListExpense is the resolver for the listExpense field.
+func (r *queryResolver) ListExpense(ctx context.Context) ([]*model.Expense, error) {
 	expenses, err := r.Conn.ListExpenses(ctx)
 	if err != nil {
 		return nil, err
@@ -59,6 +82,22 @@ func (r *queryResolver) Expenses(ctx context.Context) ([]*model.Expense, error) 
 	}
 
 	return result, nil
+}
+
+// GetExpense is the resolver for the getExpense field.
+func (r *queryResolver) GetExpense(ctx context.Context, id int) (*model.Expense, error) {
+	exists, err := r.Conn.GetExpense(ctx, int32(id))
+	if err != nil {
+		return nil, err
+	}
+	expense := &model.Expense{
+		ID:        int(exists.ID),
+		Name:      exists.Name,
+		Price:     exists.Price,
+		CreatedAt: exists.CreatedAt.String(),
+		UpdatedAt: exists.UpdatedAt.String(),
+	}
+	return expense, nil
 }
 
 // Mutation returns MutationResolver implementation.
