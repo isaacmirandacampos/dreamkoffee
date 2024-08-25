@@ -7,7 +7,10 @@ build:
 	go build -o bin/finkoffee cmd/finkoffee/main.go
 
 test:
-	go test -v ./...
+	go test ./...
+
+mockgen:
+	mockgen -source=internal/storage/persistence/db.go -destination=internal/tests/mocks/expense.sql.mocks.go -package=mocks
 
 graphql:
 	go run github.com/99designs/gqlgen generate

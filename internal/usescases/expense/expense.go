@@ -1,6 +1,8 @@
 package expense
 
-import "github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+import (
+	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+)
 
 type expenseUseCase struct {
 	repo *persistence.Queries
