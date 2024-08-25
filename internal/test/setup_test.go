@@ -2,7 +2,6 @@ package test
 
 import (
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -18,7 +17,6 @@ var (
 
 func TestMain(m *testing.M) {
 	conn, closeDB := OpenPostgresConnection()
-	defer closeDB()
 	Repo := persistence.New(conn)
 	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{
 		Resolvers: &graphql.Resolver{
@@ -28,6 +26,6 @@ func TestMain(m *testing.M) {
 	}))
 	Server = httptest.NewServer(srv)
 	defer Server.Close()
-	code := m.Run()
-	os.Exit(code)
+	defer closeDB()
+	m.Run()
 }
