@@ -7,17 +7,17 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 
+	"github.com/isaacmirandacampos/finkoffee/configs"
 	"github.com/isaacmirandacampos/finkoffee/internal/infrastructure/database"
 	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql"
 	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
-	"github.com/isaacmirandacampos/finkoffee/pkg/config"
 )
 
 const defaultPort = "8080"
 
 func main() {
-	config.Initialize()
+	configs.Initialize()
 	connection, err := database.Initialize()
 	if err != nil {
 		panic(err)

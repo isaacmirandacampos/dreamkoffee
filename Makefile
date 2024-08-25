@@ -1,5 +1,14 @@
 include .env
 
+start:
+	go run cmd/finkoffee/main.go
+
+build:
+	go build -o bin/finkoffee cmd/finkoffee/main.go
+
+test:
+	go test -v ./...
+
 graphql:
 	go run github.com/99designs/gqlgen generate
 
