@@ -8,82 +8,37 @@ import (
 	"context"
 
 	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
-	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
-	usecases "github.com/isaacmirandacampos/finkoffee/internal/usescases"
+	"github.com/isaacmirandacampos/finkoffee/internal/usescases/expense"
 )
 
-// CreateExpense is the resolver for the createExpense field.
 func (r *mutationResolver) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
-	expense := &model.Expense{
-		Name:  input.Name,
-		Price: input.Price,
-	}
-
-	inserted, err := r.Conn.CreateExpense(ctx, persistence.CreateExpenseParams{
-		Name:  expense.Name,
-		Price: expense.Price,
-	})
-
+	new_expense, err := expense.NewExpenseUseCase(r.Conn).CreateExpense(ctx, input)
 	if err != nil {
 		return nil, err
 	}
-	newExpense := &model.Expense{
-		ID:        int(inserted.ID),
-		Price:     inserted.Price,
-		Name:      inserted.Name,
-		CreatedAt: inserted.CreatedAt.String(),
-		UpdatedAt: inserted.UpdatedAt.String(),
-	}
-	return newExpense, nil
+	return new_expense, nil
 }
 
-// UpdateExpense is the resolver for the updateExpense field.
 func (r *mutationResolver) UpdateExpense(ctx context.Context, id int, input model.UpdateExpense) (*model.Expense, error) {
-	expense := &model.Expense{
-		ID:    id,
-		Name:  input.Name,
-		Price: input.Price,
-	}
-
-	updated, err := r.Conn.UpdateExpense(ctx, persistence.UpdateExpenseParams{
-		ID:    int32(expense.ID),
-		Name:  expense.Name,
-		Price: expense.Price,
-	})
-
+	updated_expense, err := expense.NewExpenseUseCase(r.Conn).UpdateExpense(ctx, &id, input)
 	if err != nil {
 		return nil, err
 	}
-
-	return &model.Expense{
-		ID:        int(updated.ID),
-		Name:      updated.Name,
-		Price:     updated.Price,
-		CreatedAt: updated.CreatedAt.String(),
-		UpdatedAt: updated.UpdatedAt.String(),
-	}, nil
+	return updated_expense, nil
 }
 
 func (r *queryResolver) ListExpense(ctx context.Context) ([]*model.Expense, error) {
-	expenses, err := usecases.NewExpenseUseCase(r.Conn).ListExpenses(ctx)
+	expenses, err := expense.NewExpenseUseCase(r.Conn).ListExpenses(ctx)
 	if err != nil {
 		return nil, err
 	}
 	return expenses, nil
 }
 
-// GetExpense is the resolver for the getExpense field.
 func (r *queryResolver) GetExpense(ctx context.Context, id int) (*model.Expense, error) {
-	exists, err := r.Conn.GetExpense(ctx, int32(id))
+	expense, err := expense.NewExpenseUseCase(r.Conn).GetExpenses(ctx, &id)
 	if err != nil {
 		return nil, err
-	}
-	expense := &model.Expense{
-		ID:        int(exists.ID),
-		Name:      exists.Name,
-		Price:     exists.Price,
-		CreatedAt: exists.CreatedAt.String(),
-		UpdatedAt: exists.UpdatedAt.String(),
 	}
 	return expense, nil
 }
