@@ -1,4 +1,4 @@
-package connection
+package test
 
 import (
 	"database/sql"
@@ -63,5 +63,6 @@ func OpenPostgresConnection() (db *sql.DB, close func()) {
 			return
 		}
 	}
+	migration(db)
 	return db, close
 }
