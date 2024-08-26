@@ -3,7 +3,6 @@ package test
 import (
 	"database/sql"
 	"net/http/httptest"
-	"testing"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql"
@@ -13,23 +12,25 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var (
-	Server *httptest.Server
-	DB *sql.DB
-)
-
-func TestMain(m *testing.M) {
-	var closeDB func()
-	DB, closeDB = connection.OpenPostgresConnection()
+func TestWithServerAndDB() (Server *httptest.Server, DB *sql.DB, close func()) {
+	DB, closeDB := connection.OpenPostgresConnection()
+	var err error
+	if err != nil {
+		panic(err)
+	}
 	Repo := persistence.New(DB)
+
 	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{
 		Resolvers: &graphql.Resolver{
 			Conn:     Repo,
 			Expenses: []*model.Expense{},
 		},
 	}))
+
 	Server = httptest.NewServer(srv)
-	defer Server.Close()
-	defer closeDB()
-	m.Run()
+	close = func() {
+		Server.Close()
+		closeDB()
+	}
+	return
 }
