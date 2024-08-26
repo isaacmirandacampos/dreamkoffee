@@ -13,7 +13,7 @@ import (
 
 func TestCreateExpense(t *testing.T) {
 	t.Parallel()
-	Server, DB, close := TestWithServerAndDB()
+	Server, Repo, close := TestWithServerAndDB()
 	defer close()
 	t.Run("create_a_new_expense", func(t *testing.T) {
 		query := `{
@@ -34,15 +34,26 @@ func TestCreateExpense(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Could not read HTTP response: %v", err)
 		}
-		if err != nil {
-			t.Fatalf("Could not perform HTTP request: %v", err)
-		}
 		defer resp.Body.Close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		result := &model.Expense{}
-		err = DB.QueryRow("SELECT name, price FROM expenses").Scan(&result.Name, &result.Price)
+
+		results, err := Repo.ListExpenses(req.Context())
+		expenses := make([]*model.Expense, 0, len(results))
 		assert.NoError(t, err)
-		assert.NotNil(t, result)
+
+		for _, r := range results {
+			expenses = append(expenses, &model.Expense{
+				ID:        int(r.ID),
+				Name:      r.Name,
+				Price:     r.Price,
+				CreatedAt: r.CreatedAt.String(),
+				UpdatedAt: r.UpdatedAt.String(),
+			})
+		}
+
+		assert.NotNil(t, expenses)
+		assert.Equal(t, 1, len(expenses))
+		result := expenses[0]
 		assert.Equal(t, "Test Expense", result.Name)
 		assert.Equal(t, "\"100\"", utils.MarshalDecimal(result.Price))
 	})

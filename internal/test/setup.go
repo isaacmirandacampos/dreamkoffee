@@ -1,7 +1,6 @@
 package test
 
 import (
-	"database/sql"
 	"net/http/httptest"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -12,13 +11,14 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func TestWithServerAndDB() (Server *httptest.Server, DB *sql.DB, close func()) {
-	DB, closeDB := connection.OpenPostgresConnection()
+func TestWithServerAndDB() (Server *httptest.Server, Repo *persistence.Queries, close func()) {
+	db, closeDB := connection.OpenPostgresConnection()
 	var err error
 	if err != nil {
 		panic(err)
 	}
-	Repo := persistence.New(DB)
+
+	Repo = persistence.New(db)
 
 	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{
 		Resolvers: &graphql.Resolver{
