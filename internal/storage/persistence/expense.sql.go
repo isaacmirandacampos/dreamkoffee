@@ -91,8 +91,8 @@ func (q *Queries) ListExpenses(ctx context.Context) ([]Expense, error) {
 }
 
 const updateExpense = `-- name: UpdateExpense :one
-UPDATE expenses 
-SET name = $1, price = $2 
+UPDATE expenses
+SET name = $1, price = $2, updated_at = now()
 WHERE id = $3 and deleted_at is null RETURNING id, price, name, created_at, updated_at, deleted_at
 `
 

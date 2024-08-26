@@ -14,5 +14,5 @@ func (ec *executionContext) unmarshalInputDecimal(_ context.Context, v interface
 }
 
 func (ec *executionContext) _Decimal(_ context.Context, _ ast.SelectionSet, v *decimal.Decimal) graphql.Marshaler {
-	return utils.MarshalDecimal(*v)
+	return graphql.MarshalString(utils.MarshalDecimal(*v))
 }
