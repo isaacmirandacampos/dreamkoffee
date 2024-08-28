@@ -19,7 +19,7 @@ func TestCreateExpense(t *testing.T) {
 			"price": "100.00",
 			"name":  "Test Expense",
 		}
-		query := helper.QueryMutation("createExpense", input, []string{"name", "price"})
+		query := helper.FabricateMutation("createExpense", input, []string{"name", "price"})
 		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
 		assert.NoError(t, err)
 		defer close()

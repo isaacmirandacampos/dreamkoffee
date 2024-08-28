@@ -11,6 +11,7 @@ func (uc *expenseUseCase) GetExpenses(ctx context.Context, id *int) (*model.Expe
 	if err != nil {
 		return nil, err
 	}
+
 	expense := &model.Expense{
 		ID:        int(result.ID),
 		Name:      result.Name,

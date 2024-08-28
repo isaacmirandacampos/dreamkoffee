@@ -1,14 +1,12 @@
 package test
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"testing"
 
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/finkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/finkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
@@ -35,35 +33,17 @@ func TestGetExpense(t *testing.T) {
 			"query": "query { getExpense(id: 1) { id name } }"
 		}`
 
-		req, err := http.NewRequest("POST", Server.URL+"/query", bytes.NewBuffer([]byte(query)))
-		if err != nil {
-			t.Fatalf("Could not create HTTP request: %v", err)
-		}
-		req.Header.Set("Content-Type", "application/json")
-
-		client := &http.Client{}
-		resp, err := client.Do(req)
-		if err != nil {
-			t.Fatalf("Could not execute HTTP request: %v", err)
-		}
-		defer resp.Body.Close()
-
+		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
+		assert.NoError(t, err)
+		defer close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			t.Fatalf("Could not read HTTP response: %v", err)
-		}
-
 		var response struct {
 			Data struct {
 				GetExpense persistence.Expense `json:"getExpense"`
 			} `json:"data"`
 		}
-		err = json.Unmarshal(body, &response)
-		if err != nil {
-			t.Fatalf("Could not unmarshal JSON response: %v", err)
-		}
+		err = helper.TransformBody(resp.Body, &response)
+		assert.NoError(t, err)
 		expense := response.Data.GetExpense
 		assert.Equal(t, result.ID, expense.ID)
 		assert.Equal(t, "Test Expense", expense.Name)

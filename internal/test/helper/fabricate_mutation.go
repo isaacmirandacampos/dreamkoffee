@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func QueryMutation(mutationName string, input map[string]string, returnFields []string) string {
+func FabricateMutation(mutationName string, input map[string]string, returnFields []string) string {
 	// Extract keys from the map and sort them to ensure consistent order
 	keys := make([]string, 0, len(input))
 	for key := range input {
