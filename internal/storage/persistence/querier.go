@@ -10,6 +10,7 @@ import (
 
 type Querier interface {
 	CreateExpense(ctx context.Context, arg CreateExpenseParams) (Expense, error)
+	DeleteExpense(ctx context.Context, id int32) (Expense, error)
 	GetExpense(ctx context.Context, id int32) (Expense, error)
 	ListExpenses(ctx context.Context) ([]Expense, error)
 	UpdateExpense(ctx context.Context, arg UpdateExpenseParams) (Expense, error)

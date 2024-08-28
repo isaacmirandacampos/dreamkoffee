@@ -1,43 +1,32 @@
 package test
 
 import (
-	"bytes"
-	"log"
+	"context"
 	"net/http"
 	"testing"
 
 	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/finkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateExpense(t *testing.T) {
 	t.Parallel()
-	Server, Repo, close := TestWithServerAndDB()
+	Server, database, close := TestWithServerAndDB()
 	defer close()
 	t.Run("create_a_new_expense", func(t *testing.T) {
-		query := `{
-			"query": "mutation { createExpense(input: {name: \"Test Expense\", price: \"100.00\"}) { name price } }"
-		}`
-		log.Printf("HTTP request: %v", Server.URL)
-
-		req, err := http.NewRequest("POST", Server.URL+"/query", bytes.NewBuffer([]byte(query)))
-		if err != nil {
-			t.Fatalf("Could not create HTTP request: %v", err)
+		input := map[string]string{
+			"price": "100.00",
+			"name":  "Test Expense",
 		}
-		req.Header.Set("Content-Type", "application/json")
-
-		client := &http.Client{}
-		resp, err := client.Do(req)
+		query := helper.QueryMutation("createExpense", input, []string{"name", "price"})
+		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
 		assert.NoError(t, err)
-		assert.NoError(t, err)
-		if err != nil {
-			t.Fatalf("Could not read HTTP response: %v", err)
-		}
-		defer resp.Body.Close()
+		defer close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-
-		results, err := Repo.ListExpenses(req.Context())
+		ctx := context.Background()
+		results, err := database.Repo.ListExpenses(ctx)
 		expenses := make([]*model.Expense, 0, len(results))
 		assert.NoError(t, err)
 

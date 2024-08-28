@@ -15,7 +15,7 @@ import (
 
 func TestGetExpense(t *testing.T) {
 	t.Parallel()
-	Server, Repo, close := TestWithServerAndDB()
+	Server, database, close := TestWithServerAndDB()
 	defer close()
 	t.Run("get_a_existent_expense", func(t *testing.T) {
 		price, err := utils.UnmarshalDecimal(100)
@@ -23,7 +23,7 @@ func TestGetExpense(t *testing.T) {
 			t.Fatalf("Could not unmarshal decimal: %v", err)
 		}
 		ctx := context.Background()
-		result, err := Repo.CreateExpense(ctx, persistence.CreateExpenseParams{
+		result, err := database.Repo.CreateExpense(ctx, persistence.CreateExpenseParams{
 			Name:  "Test Expense",
 			Price: price,
 		})

@@ -38,6 +38,26 @@ func (q *Queries) CreateExpense(ctx context.Context, arg CreateExpenseParams) (E
 	return i, err
 }
 
+const deleteExpense = `-- name: DeleteExpense :one
+UPDATE expenses
+SET deleted_at = now()
+WHERE id = $1 and deleted_at is null RETURNING id, price, name, created_at, updated_at, deleted_at
+`
+
+func (q *Queries) DeleteExpense(ctx context.Context, id int32) (Expense, error) {
+	row := q.db.QueryRowContext(ctx, deleteExpense, id)
+	var i Expense
+	err := row.Scan(
+		&i.ID,
+		&i.Price,
+		&i.Name,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
 const getExpense = `-- name: GetExpense :one
 SELECT id, price, name, created_at, updated_at, deleted_at FROM expenses WHERE id = $1 and deleted_at is null
 `
