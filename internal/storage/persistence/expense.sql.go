@@ -76,6 +76,24 @@ func (q *Queries) GetExpense(ctx context.Context, id int32) (Expense, error) {
 	return i, err
 }
 
+const getLastExpense = `-- name: GetLastExpense :one
+SELECT id, price, name, created_at, updated_at, deleted_at FROM expenses where deleted_at is null ORDER BY id desc LIMIT 1
+`
+
+func (q *Queries) GetLastExpense(ctx context.Context) (Expense, error) {
+	row := q.db.QueryRowContext(ctx, getLastExpense)
+	var i Expense
+	err := row.Scan(
+		&i.ID,
+		&i.Price,
+		&i.Name,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
 const listExpenses = `-- name: ListExpenses :many
 SELECT id, price, name, created_at, updated_at, deleted_at FROM expenses where deleted_at is null ORDER BY id desc
 `

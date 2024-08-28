@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/finkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
@@ -26,24 +25,11 @@ func TestCreateExpense(t *testing.T) {
 		defer close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		ctx := context.Background()
-		results, err := database.Repo.ListExpenses(ctx)
-		expenses := make([]*model.Expense, 0, len(results))
+
+		expenses, err := database.Repo.GetLastExpense(ctx)
 		assert.NoError(t, err)
-
-		for _, r := range results {
-			expenses = append(expenses, &model.Expense{
-				ID:        int(r.ID),
-				Name:      r.Name,
-				Price:     r.Price,
-				CreatedAt: r.CreatedAt.String(),
-				UpdatedAt: r.UpdatedAt.String(),
-			})
-		}
-
 		assert.NotNil(t, expenses)
-		assert.Equal(t, 1, len(expenses))
-		result := expenses[0]
-		assert.Equal(t, "Test Expense", result.Name)
-		assert.Equal(t, "\"100\"", utils.MarshalDecimal(result.Price))
+		assert.Equal(t, "Test Expense", expenses.Name)
+		assert.Equal(t, "\"100\"", utils.MarshalDecimal(expenses.Price))
 	})
 }

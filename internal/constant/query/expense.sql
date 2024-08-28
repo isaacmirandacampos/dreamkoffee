@@ -20,3 +20,6 @@ WHERE id = $3 and deleted_at is null RETURNING *;
 UPDATE expenses
 SET deleted_at = now()
 WHERE id = $1 and deleted_at is null RETURNING *;
+
+-- name: GetLastExpense :one
+SELECT * FROM expenses where deleted_at is null ORDER BY id desc LIMIT 1;
