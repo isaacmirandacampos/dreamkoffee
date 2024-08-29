@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"net/http/httptest"
 
-	"github.com/isaacmirandacampos/finkoffee/internal"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 	"github.com/isaacmirandacampos/finkoffee/internal/test/connection"
 	_ "github.com/lib/pq"
@@ -22,7 +22,7 @@ func TestWithServerAndDB() (Server *httptest.Server, database *Persistence, clos
 		Repo: repo,
 		DB:   db,
 	}
-	srv := internal.Initialize(repo)
+	srv := applications.Initialize(repo)
 
 	Server = httptest.NewServer(srv)
 	close = func() {

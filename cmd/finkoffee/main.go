@@ -7,7 +7,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 
 	"github.com/isaacmirandacampos/finkoffee/configs"
-	"github.com/isaacmirandacampos/finkoffee/internal"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications"
 	"github.com/isaacmirandacampos/finkoffee/internal/infrastructure/database"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 )
@@ -23,7 +23,7 @@ func main() {
 	defer connection.Close()
 	conn := persistence.New(connection)
 
-	srv := internal.Initialize(conn)
+	srv := applications.Initialize(conn)
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
