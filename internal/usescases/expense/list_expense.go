@@ -4,12 +4,14 @@ import (
 	"context"
 
 	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/utils"
 )
 
 func (uc *expenseUseCase) ListExpenses(ctx context.Context) ([]*model.Expense, error) {
 	results, err := uc.repo.ListExpenses(ctx)
 	if err != nil {
-		return nil, err
+		utils.ErrorHandling(ctx, 500, "internal_server_error", "Could not list expenses", err.Error())
+		return nil, nil
 	}
 	expenses := make([]*model.Expense, 0, len(results))
 

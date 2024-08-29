@@ -10,7 +10,7 @@ import (
 func (uc *expenseUseCase) GetExpense(ctx context.Context, id *int) (*model.Expense, error) {
 	result, err := uc.repo.GetExpense(ctx, int32(*id))
 	if err != nil {
-		utils.ErrorHandling(ctx, 404, "expense_not_found", "Expense not found")
+		utils.ErrorHandling(ctx, 404, "expense_not_found", "Expense not found", err.Error())
 		return nil, nil
 	}
 

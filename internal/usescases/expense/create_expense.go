@@ -5,6 +5,7 @@ import (
 
 	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/finkoffee/internal/utils"
 )
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
@@ -13,7 +14,8 @@ func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpen
 		Value:       input.Value,
 	})
 	if err != nil {
-		return nil, err
+		utils.ErrorHandling(ctx, 400, "bad_request", "Could not create expense", err.Error())
+		return nil, nil
 	}
 	expense := &model.Expense{
 		ID:          int(returned.ID),
