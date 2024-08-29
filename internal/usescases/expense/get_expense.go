@@ -2,22 +2,16 @@ package expense
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/99designs/gqlgen/graphql"
 	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/utils"
 )
 
 func (uc *expenseUseCase) GetExpense(ctx context.Context, id *int) (*model.Expense, error) {
 	result, err := uc.repo.GetExpense(ctx, int32(*id))
 	if err != nil {
-		return nil, err
-	}
-
-	if result.ID == 0 {
-		err = fmt.Errorf("Expense not found")
-		graphql.AddError(ctx, err)
-		return nil, err
+		utils.ErrorHandling(ctx, 404, "expense_not_found", "Expense not found")
+		return nil, nil
 	}
 
 	expense := &model.Expense{

@@ -48,4 +48,21 @@ func TestGetExpense(t *testing.T) {
 		assert.Equal(t, result.ID, expense.ID)
 		assert.Equal(t, "Test Expense", expense.Description)
 	})
+
+	t.Run("get_a_non_existent_expense", func(t *testing.T) {
+		query := `{
+			"query": "query { getExpense(id: 100) { id description } }"
+		}`
+
+		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
+		assert.NoError(t, err)
+		defer close()
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		response := helper.ErrorResponse{}
+		err = helper.TransformBody(resp.Body, &response)
+		assert.NoError(t, err)
+		assert.Equal(t, "Expense not found", response.Errors[0].Message)
+		assert.Equal(t, "expense_not_found", response.Errors[0].Extensions.Error)
+		assert.Equal(t, 404, response.Errors[0].Extensions.StatusCode)
+	})
 }
