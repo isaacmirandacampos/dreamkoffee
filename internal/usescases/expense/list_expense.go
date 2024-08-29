@@ -3,7 +3,7 @@ package expense
 import (
 	"context"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
 )
 
 func (uc *expenseUseCase) ListExpenses(ctx context.Context) ([]*model.Expense, error) {

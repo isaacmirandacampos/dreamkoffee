@@ -1,7 +1,7 @@
-package graphql
+package graph
 
 import (
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 )
 

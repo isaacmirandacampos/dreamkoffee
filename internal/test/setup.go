@@ -4,9 +4,7 @@ import (
 	"database/sql"
 	"net/http/httptest"
 
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 	"github.com/isaacmirandacampos/finkoffee/internal/test/connection"
 	_ "github.com/lib/pq"
@@ -24,12 +22,7 @@ func TestWithServerAndDB() (Server *httptest.Server, database *Persistence, clos
 		Repo: repo,
 		DB:   db,
 	}
-	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{
-		Resolvers: &graphql.Resolver{
-			Conn:     repo,
-			Expenses: []*model.Expense{},
-		},
-	}))
+	srv := internal.Initialize(repo)
 
 	Server = httptest.NewServer(srv)
 	close = func() {

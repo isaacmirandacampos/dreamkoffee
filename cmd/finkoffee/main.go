@@ -4,12 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 
 	"github.com/isaacmirandacampos/finkoffee/configs"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal"
 	"github.com/isaacmirandacampos/finkoffee/internal/infrastructure/database"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 )
@@ -25,11 +23,7 @@ func main() {
 	defer connection.Close()
 	conn := persistence.New(connection)
 
-	srv := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: &graphql.Resolver{
-		Conn:     conn,
-		Expenses: []*model.Expense{},
-	}}))
-
+	srv := internal.Initialize(conn)
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 

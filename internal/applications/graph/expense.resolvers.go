@@ -1,4 +1,4 @@
-package graphql
+package graph
 
 // This file will be automatically regenerated based on the schema, any resolver implementations
 // will be copied through when generating and any unknown code will be moved to the end.
@@ -7,7 +7,7 @@ package graphql
 import (
 	"context"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/usescases/expense"
 )
 
