@@ -1,6 +1,6 @@
 -- name: CreateExpense :one
 INSERT INTO expenses (
-  name, price
+  description, value
 ) VALUES (
   $1, $2
 ) RETURNING *;
@@ -13,7 +13,7 @@ SELECT * FROM expenses where deleted_at is null ORDER BY id desc;
 
 -- name: UpdateExpense :one
 UPDATE expenses
-SET name = $1, price = $2, updated_at = now()
+SET description = $1, value = $2, updated_at = now()
 WHERE id = $3 and deleted_at is null RETURNING *;
 
 -- name: DeleteExpense :one

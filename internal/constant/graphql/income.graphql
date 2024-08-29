@@ -1,4 +1,4 @@
-type Expense {
+type Income {
   id: Int!
   description: String!
   value: Decimal!
@@ -6,22 +6,22 @@ type Expense {
   updatedAt: String!
 }
 
-input NewExpense {
+input NewIncome {
   description: String!
   value: Decimal!
 }
 
-input UpdateExpense {
+input UpdateIncome {
   description: String!
   value: Decimal!
 }
 
 extend type Query {
-  listExpense: [Expense!]!
-  getExpense(id: Int!): Expense!
+  listIncome: [Income!]!
+  getIncome(id: Int!): Income!
 }
 
 extend type Mutation {
-  createExpense(input: NewExpense!): Expense!
-  updateExpense(id: Int!, input: UpdateExpense!): Expense!
+  createIncome(input: NewIncome!): Income!
+  updateIncome(id: Int!, input: UpdateIncome!): Income!
 }

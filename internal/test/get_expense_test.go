@@ -22,15 +22,15 @@ func TestGetExpense(t *testing.T) {
 		}
 		ctx := context.Background()
 		result, err := database.Repo.CreateExpense(ctx, persistence.CreateExpenseParams{
-			Name:  "Test Expense",
-			Price: price,
+			Description: "Test Expense",
+			Value:       price,
 		})
 		if err != nil {
 			t.Fatalf("Could not create expense: %v", err)
 		}
 
 		query := `{
-			"query": "query { getExpense(id: 1) { id name } }"
+			"query": "query { getExpense(id: 1) { id description } }"
 		}`
 
 		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
@@ -46,6 +46,6 @@ func TestGetExpense(t *testing.T) {
 		assert.NoError(t, err)
 		expense := response.Data.GetExpense
 		assert.Equal(t, result.ID, expense.ID)
-		assert.Equal(t, "Test Expense", expense.Name)
+		assert.Equal(t, "Test Expense", expense.Description)
 	})
 }

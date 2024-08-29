@@ -12,10 +12,10 @@ import (
 )
 
 type Expense struct {
-	ID        int32           `db:"id" json:"id"`
-	Price     decimal.Decimal `db:"price" json:"price"`
-	Name      string          `db:"name" json:"name"`
-	CreatedAt time.Time       `db:"created_at" json:"created_at"`
-	UpdatedAt time.Time       `db:"updated_at" json:"updated_at"`
-	DeletedAt sql.NullTime    `db:"deleted_at" json:"deleted_at"`
+	ID          int32           `db:"id" json:"id"`
+	Value       decimal.Decimal `db:"value" json:"value"`
+	Description string          `db:"description" json:"description"`
+	CreatedAt   time.Time       `db:"created_at" json:"created_at"`
+	UpdatedAt   time.Time       `db:"updated_at" json:"updated_at"`
+	DeletedAt   sql.NullTime    `db:"deleted_at" json:"deleted_at"`
 }

@@ -15,11 +15,11 @@ func (uc *expenseUseCase) ListExpenses(ctx context.Context) ([]*model.Expense, e
 
 	for _, expense := range results {
 		expenses = append(expenses, &model.Expense{
-			ID:        int(expense.ID),
-			Name:      expense.Name,
-			Price:     expense.Price,
-			CreatedAt: expense.CreatedAt.String(),
-			UpdatedAt: expense.UpdatedAt.String(),
+			ID:          int(expense.ID),
+			Description: expense.Description,
+			Value:       expense.Value,
+			CreatedAt:   expense.CreatedAt.String(),
+			UpdatedAt:   expense.UpdatedAt.String(),
 		})
 	}
 

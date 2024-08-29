@@ -13,24 +13,24 @@ import (
 
 const createExpense = `-- name: CreateExpense :one
 INSERT INTO expenses (
-  name, price
+  description, value
 ) VALUES (
   $1, $2
-) RETURNING id, price, name, created_at, updated_at, deleted_at
+) RETURNING id, value, description, created_at, updated_at, deleted_at
 `
 
 type CreateExpenseParams struct {
-	Name  string          `db:"name" json:"name"`
-	Price decimal.Decimal `db:"price" json:"price"`
+	Description string          `db:"description" json:"description"`
+	Value       decimal.Decimal `db:"value" json:"value"`
 }
 
 func (q *Queries) CreateExpense(ctx context.Context, arg CreateExpenseParams) (Expense, error) {
-	row := q.db.QueryRowContext(ctx, createExpense, arg.Name, arg.Price)
+	row := q.db.QueryRowContext(ctx, createExpense, arg.Description, arg.Value)
 	var i Expense
 	err := row.Scan(
 		&i.ID,
-		&i.Price,
-		&i.Name,
+		&i.Value,
+		&i.Description,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
@@ -41,7 +41,7 @@ func (q *Queries) CreateExpense(ctx context.Context, arg CreateExpenseParams) (E
 const deleteExpense = `-- name: DeleteExpense :one
 UPDATE expenses
 SET deleted_at = now()
-WHERE id = $1 and deleted_at is null RETURNING id, price, name, created_at, updated_at, deleted_at
+WHERE id = $1 and deleted_at is null RETURNING id, value, description, created_at, updated_at, deleted_at
 `
 
 func (q *Queries) DeleteExpense(ctx context.Context, id int32) (Expense, error) {
@@ -49,8 +49,8 @@ func (q *Queries) DeleteExpense(ctx context.Context, id int32) (Expense, error) 
 	var i Expense
 	err := row.Scan(
 		&i.ID,
-		&i.Price,
-		&i.Name,
+		&i.Value,
+		&i.Description,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
@@ -59,7 +59,7 @@ func (q *Queries) DeleteExpense(ctx context.Context, id int32) (Expense, error) 
 }
 
 const getExpense = `-- name: GetExpense :one
-SELECT id, price, name, created_at, updated_at, deleted_at FROM expenses WHERE id = $1 and deleted_at is null
+SELECT id, value, description, created_at, updated_at, deleted_at FROM expenses WHERE id = $1 and deleted_at is null
 `
 
 func (q *Queries) GetExpense(ctx context.Context, id int32) (Expense, error) {
@@ -67,8 +67,8 @@ func (q *Queries) GetExpense(ctx context.Context, id int32) (Expense, error) {
 	var i Expense
 	err := row.Scan(
 		&i.ID,
-		&i.Price,
-		&i.Name,
+		&i.Value,
+		&i.Description,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
@@ -77,7 +77,7 @@ func (q *Queries) GetExpense(ctx context.Context, id int32) (Expense, error) {
 }
 
 const getLastExpense = `-- name: GetLastExpense :one
-SELECT id, price, name, created_at, updated_at, deleted_at FROM expenses where deleted_at is null ORDER BY id desc LIMIT 1
+SELECT id, value, description, created_at, updated_at, deleted_at FROM expenses where deleted_at is null ORDER BY id desc LIMIT 1
 `
 
 func (q *Queries) GetLastExpense(ctx context.Context) (Expense, error) {
@@ -85,8 +85,8 @@ func (q *Queries) GetLastExpense(ctx context.Context) (Expense, error) {
 	var i Expense
 	err := row.Scan(
 		&i.ID,
-		&i.Price,
-		&i.Name,
+		&i.Value,
+		&i.Description,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
@@ -95,7 +95,7 @@ func (q *Queries) GetLastExpense(ctx context.Context) (Expense, error) {
 }
 
 const listExpenses = `-- name: ListExpenses :many
-SELECT id, price, name, created_at, updated_at, deleted_at FROM expenses where deleted_at is null ORDER BY id desc
+SELECT id, value, description, created_at, updated_at, deleted_at FROM expenses where deleted_at is null ORDER BY id desc
 `
 
 func (q *Queries) ListExpenses(ctx context.Context) ([]Expense, error) {
@@ -109,8 +109,8 @@ func (q *Queries) ListExpenses(ctx context.Context) ([]Expense, error) {
 		var i Expense
 		if err := rows.Scan(
 			&i.ID,
-			&i.Price,
-			&i.Name,
+			&i.Value,
+			&i.Description,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 			&i.DeletedAt,
@@ -130,23 +130,23 @@ func (q *Queries) ListExpenses(ctx context.Context) ([]Expense, error) {
 
 const updateExpense = `-- name: UpdateExpense :one
 UPDATE expenses
-SET name = $1, price = $2, updated_at = now()
-WHERE id = $3 and deleted_at is null RETURNING id, price, name, created_at, updated_at, deleted_at
+SET description = $1, value = $2, updated_at = now()
+WHERE id = $3 and deleted_at is null RETURNING id, value, description, created_at, updated_at, deleted_at
 `
 
 type UpdateExpenseParams struct {
-	Name  string          `db:"name" json:"name"`
-	Price decimal.Decimal `db:"price" json:"price"`
-	ID    int32           `db:"id" json:"id"`
+	Description string          `db:"description" json:"description"`
+	Value       decimal.Decimal `db:"value" json:"value"`
+	ID          int32           `db:"id" json:"id"`
 }
 
 func (q *Queries) UpdateExpense(ctx context.Context, arg UpdateExpenseParams) (Expense, error) {
-	row := q.db.QueryRowContext(ctx, updateExpense, arg.Name, arg.Price, arg.ID)
+	row := q.db.QueryRowContext(ctx, updateExpense, arg.Description, arg.Value, arg.ID)
 	var i Expense
 	err := row.Scan(
 		&i.ID,
-		&i.Price,
-		&i.Name,
+		&i.Value,
+		&i.Description,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,

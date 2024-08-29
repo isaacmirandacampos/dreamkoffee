@@ -7,25 +7,43 @@ import (
 )
 
 type Expense struct {
-	ID        int             `json:"id"`
-	Name      string          `json:"name"`
-	Price     decimal.Decimal `json:"price"`
-	CreatedAt string          `json:"createdAt"`
-	UpdatedAt string          `json:"updatedAt"`
+	ID          int             `json:"id"`
+	Description string          `json:"description"`
+	Value       decimal.Decimal `json:"value"`
+	CreatedAt   string          `json:"createdAt"`
+	UpdatedAt   string          `json:"updatedAt"`
+}
+
+type Income struct {
+	ID          int             `json:"id"`
+	Description string          `json:"description"`
+	Value       decimal.Decimal `json:"value"`
+	CreatedAt   string          `json:"createdAt"`
+	UpdatedAt   string          `json:"updatedAt"`
 }
 
 type Mutation struct {
 }
 
 type NewExpense struct {
-	Name  string          `json:"name"`
-	Price decimal.Decimal `json:"price"`
+	Description string          `json:"description"`
+	Value       decimal.Decimal `json:"value"`
+}
+
+type NewIncome struct {
+	Description string          `json:"description"`
+	Value       decimal.Decimal `json:"value"`
 }
 
 type Query struct {
 }
 
 type UpdateExpense struct {
-	Name  string          `json:"name"`
-	Price decimal.Decimal `json:"price"`
+	Description string          `json:"description"`
+	Value       decimal.Decimal `json:"value"`
+}
+
+type UpdateIncome struct {
+	Description string          `json:"description"`
+	Value       decimal.Decimal `json:"value"`
 }

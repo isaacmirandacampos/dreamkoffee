@@ -16,10 +16,10 @@ func TestCreateExpense(t *testing.T) {
 	defer close()
 	t.Run("create_a_new_expense", func(t *testing.T) {
 		input := map[string]string{
-			"price": "100.00",
-			"name":  "Test Expense",
+			"value":       "100.00",
+			"description": "Test Expense",
 		}
-		query := helper.FabricateMutation("createExpense", input, []string{"name", "price"})
+		query := helper.FabricateMutation("createExpense", input, []string{"description", "value"})
 		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
 		assert.NoError(t, err)
 		defer close()
@@ -29,7 +29,7 @@ func TestCreateExpense(t *testing.T) {
 		expenses, err := database.Repo.GetLastExpense(ctx)
 		assert.NoError(t, err)
 		assert.NotNil(t, expenses)
-		assert.Equal(t, "Test Expense", expenses.Name)
-		assert.Equal(t, "\"100\"", utils.MarshalDecimal(expenses.Price))
+		assert.Equal(t, "Test Expense", expenses.Description)
+		assert.Equal(t, "\"100\"", utils.MarshalDecimal(expenses.Value))
 	})
 }

@@ -48,31 +48,47 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Expense struct {
-		CreatedAt func(childComplexity int) int
-		ID        func(childComplexity int) int
-		Name      func(childComplexity int) int
-		Price     func(childComplexity int) int
-		UpdatedAt func(childComplexity int) int
+		CreatedAt   func(childComplexity int) int
+		Description func(childComplexity int) int
+		ID          func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
+		Value       func(childComplexity int) int
+	}
+
+	Income struct {
+		CreatedAt   func(childComplexity int) int
+		Description func(childComplexity int) int
+		ID          func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
+		Value       func(childComplexity int) int
 	}
 
 	Mutation struct {
 		CreateExpense func(childComplexity int, input model.NewExpense) int
+		CreateIncome  func(childComplexity int, input model.NewIncome) int
 		UpdateExpense func(childComplexity int, id int, input model.UpdateExpense) int
+		UpdateIncome  func(childComplexity int, id int, input model.UpdateIncome) int
 	}
 
 	Query struct {
 		GetExpense  func(childComplexity int, id int) int
+		GetIncome   func(childComplexity int, id int) int
 		ListExpense func(childComplexity int) int
+		ListIncome  func(childComplexity int) int
 	}
 }
 
 type MutationResolver interface {
 	CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error)
 	UpdateExpense(ctx context.Context, id int, input model.UpdateExpense) (*model.Expense, error)
+	CreateIncome(ctx context.Context, input model.NewIncome) (*model.Income, error)
+	UpdateIncome(ctx context.Context, id int, input model.UpdateIncome) (*model.Income, error)
 }
 type QueryResolver interface {
 	ListExpense(ctx context.Context) ([]*model.Expense, error)
 	GetExpense(ctx context.Context, id int) (*model.Expense, error)
+	ListIncome(ctx context.Context) ([]*model.Income, error)
+	GetIncome(ctx context.Context, id int) (*model.Income, error)
 }
 
 type executableSchema struct {
@@ -101,6 +117,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Expense.CreatedAt(childComplexity), true
 
+	case "Expense.description":
+		if e.complexity.Expense.Description == nil {
+			break
+		}
+
+		return e.complexity.Expense.Description(childComplexity), true
+
 	case "Expense.id":
 		if e.complexity.Expense.ID == nil {
 			break
@@ -108,26 +131,54 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Expense.ID(childComplexity), true
 
-	case "Expense.name":
-		if e.complexity.Expense.Name == nil {
-			break
-		}
-
-		return e.complexity.Expense.Name(childComplexity), true
-
-	case "Expense.price":
-		if e.complexity.Expense.Price == nil {
-			break
-		}
-
-		return e.complexity.Expense.Price(childComplexity), true
-
 	case "Expense.updatedAt":
 		if e.complexity.Expense.UpdatedAt == nil {
 			break
 		}
 
 		return e.complexity.Expense.UpdatedAt(childComplexity), true
+
+	case "Expense.value":
+		if e.complexity.Expense.Value == nil {
+			break
+		}
+
+		return e.complexity.Expense.Value(childComplexity), true
+
+	case "Income.createdAt":
+		if e.complexity.Income.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.Income.CreatedAt(childComplexity), true
+
+	case "Income.description":
+		if e.complexity.Income.Description == nil {
+			break
+		}
+
+		return e.complexity.Income.Description(childComplexity), true
+
+	case "Income.id":
+		if e.complexity.Income.ID == nil {
+			break
+		}
+
+		return e.complexity.Income.ID(childComplexity), true
+
+	case "Income.updatedAt":
+		if e.complexity.Income.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.Income.UpdatedAt(childComplexity), true
+
+	case "Income.value":
+		if e.complexity.Income.Value == nil {
+			break
+		}
+
+		return e.complexity.Income.Value(childComplexity), true
 
 	case "Mutation.createExpense":
 		if e.complexity.Mutation.CreateExpense == nil {
@@ -141,6 +192,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateExpense(childComplexity, args["input"].(model.NewExpense)), true
 
+	case "Mutation.createIncome":
+		if e.complexity.Mutation.CreateIncome == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createIncome_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreateIncome(childComplexity, args["input"].(model.NewIncome)), true
+
 	case "Mutation.updateExpense":
 		if e.complexity.Mutation.UpdateExpense == nil {
 			break
@@ -152,6 +215,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateExpense(childComplexity, args["id"].(int), args["input"].(model.UpdateExpense)), true
+
+	case "Mutation.updateIncome":
+		if e.complexity.Mutation.UpdateIncome == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateIncome_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateIncome(childComplexity, args["id"].(int), args["input"].(model.UpdateIncome)), true
 
 	case "Query.getExpense":
 		if e.complexity.Query.GetExpense == nil {
@@ -165,12 +240,31 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetExpense(childComplexity, args["id"].(int)), true
 
+	case "Query.getIncome":
+		if e.complexity.Query.GetIncome == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getIncome_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetIncome(childComplexity, args["id"].(int)), true
+
 	case "Query.listExpense":
 		if e.complexity.Query.ListExpense == nil {
 			break
 		}
 
 		return e.complexity.Query.ListExpense(childComplexity), true
+
+	case "Query.listIncome":
+		if e.complexity.Query.ListIncome == nil {
+			break
+		}
+
+		return e.complexity.Query.ListIncome(childComplexity), true
 
 	}
 	return 0, false
@@ -181,7 +275,9 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	ec := executionContext{rc, e, 0, 0, make(chan graphql.DeferredResult)}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputNewExpense,
+		ec.unmarshalInputNewIncome,
 		ec.unmarshalInputUpdateExpense,
+		ec.unmarshalInputUpdateIncome,
 	)
 	first := true
 
@@ -279,35 +375,63 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../../constant/graphql/expense.graphql", Input: `scalar Decimal
-
-type Expense {
+	{Name: "../../constant/graphql/expense.graphql", Input: `type Expense {
   id: Int!
-  name: String!
-  price: Decimal!
+  description: String!
+  value: Decimal!
   createdAt: String!
   updatedAt: String!
 }
 
-type Query {
+input NewExpense {
+  description: String!
+  value: Decimal!
+}
+
+input UpdateExpense {
+  description: String!
+  value: Decimal!
+}
+
+extend type Query {
   listExpense: [Expense!]!
   getExpense(id: Int!): Expense!
 }
 
-input NewExpense {
-  name: String!
-  price: Decimal!
-}
-
-input UpdateExpense {
-  name: String!
-  price: Decimal!
-}
-
-type Mutation {
+extend type Mutation {
   createExpense(input: NewExpense!): Expense!
   updateExpense(id: Int!, input: UpdateExpense!): Expense!
 }
+`, BuiltIn: false},
+	{Name: "../../constant/graphql/income.graphql", Input: `type Income {
+  id: Int!
+  description: String!
+  value: Decimal!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input NewIncome {
+  description: String!
+  value: Decimal!
+}
+
+input UpdateIncome {
+  description: String!
+  value: Decimal!
+}
+
+extend type Query {
+  listIncome: [Income!]!
+  getIncome(id: Int!): Income!
+}
+
+extend type Mutation {
+  createIncome(input: NewIncome!): Income!
+  updateIncome(id: Int!, input: UpdateIncome!): Income!
+}
+`, BuiltIn: false},
+	{Name: "../../constant/graphql/schema.graphql", Input: `scalar Decimal
 `, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -323,6 +447,21 @@ func (ec *executionContext) field_Mutation_createExpense_args(ctx context.Contex
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNNewExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewExpense(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_createIncome_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.NewIncome
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNNewIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewIncome(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -355,6 +494,30 @@ func (ec *executionContext) field_Mutation_updateExpense_args(ctx context.Contex
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updateIncome_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 model.UpdateIncome
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg1, err = ec.unmarshalNUpdateIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateIncome(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -371,6 +534,21 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 }
 
 func (ec *executionContext) field_Query_getExpense_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_getIncome_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 int
@@ -467,8 +645,8 @@ func (ec *executionContext) fieldContext_Expense_id(_ context.Context, field gra
 	return fc, nil
 }
 
-func (ec *executionContext) _Expense_name(ctx context.Context, field graphql.CollectedField, obj *model.Expense) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Expense_name(ctx, field)
+func (ec *executionContext) _Expense_description(ctx context.Context, field graphql.CollectedField, obj *model.Expense) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Expense_description(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -481,7 +659,7 @@ func (ec *executionContext) _Expense_name(ctx context.Context, field graphql.Col
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Name, nil
+		return obj.Description, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -498,7 +676,7 @@ func (ec *executionContext) _Expense_name(ctx context.Context, field graphql.Col
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Expense_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Expense_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Expense",
 		Field:      field,
@@ -511,8 +689,8 @@ func (ec *executionContext) fieldContext_Expense_name(_ context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _Expense_price(ctx context.Context, field graphql.CollectedField, obj *model.Expense) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Expense_price(ctx, field)
+func (ec *executionContext) _Expense_value(ctx context.Context, field graphql.CollectedField, obj *model.Expense) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Expense_value(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -525,7 +703,7 @@ func (ec *executionContext) _Expense_price(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Price, nil
+		return obj.Value, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -542,7 +720,7 @@ func (ec *executionContext) _Expense_price(ctx context.Context, field graphql.Co
 	return ec.marshalNDecimal2githubᚗcomᚋshopspringᚋdecimalᚐDecimal(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Expense_price(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Expense_value(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Expense",
 		Field:      field,
@@ -643,6 +821,226 @@ func (ec *executionContext) fieldContext_Expense_updatedAt(_ context.Context, fi
 	return fc, nil
 }
 
+func (ec *executionContext) _Income_id(ctx context.Context, field graphql.CollectedField, obj *model.Income) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Income_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Income_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Income",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Income_description(ctx context.Context, field graphql.CollectedField, obj *model.Income) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Income_description(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Income_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Income",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Income_value(ctx context.Context, field graphql.CollectedField, obj *model.Income) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Income_value(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Value, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(decimal.Decimal)
+	fc.Result = res
+	return ec.marshalNDecimal2githubᚗcomᚋshopspringᚋdecimalᚐDecimal(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Income_value(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Income",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Decimal does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Income_createdAt(ctx context.Context, field graphql.CollectedField, obj *model.Income) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Income_createdAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Income_createdAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Income",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Income_updatedAt(ctx context.Context, field graphql.CollectedField, obj *model.Income) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Income_updatedAt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Income_updatedAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Income",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_createExpense(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createExpense(ctx, field)
 	if err != nil {
@@ -684,10 +1082,10 @@ func (ec *executionContext) fieldContext_Mutation_createExpense(ctx context.Cont
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Expense_id(ctx, field)
-			case "name":
-				return ec.fieldContext_Expense_name(ctx, field)
-			case "price":
-				return ec.fieldContext_Expense_price(ctx, field)
+			case "description":
+				return ec.fieldContext_Expense_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Expense_value(ctx, field)
 			case "createdAt":
 				return ec.fieldContext_Expense_createdAt(ctx, field)
 			case "updatedAt":
@@ -751,10 +1149,10 @@ func (ec *executionContext) fieldContext_Mutation_updateExpense(ctx context.Cont
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Expense_id(ctx, field)
-			case "name":
-				return ec.fieldContext_Expense_name(ctx, field)
-			case "price":
-				return ec.fieldContext_Expense_price(ctx, field)
+			case "description":
+				return ec.fieldContext_Expense_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Expense_value(ctx, field)
 			case "createdAt":
 				return ec.fieldContext_Expense_createdAt(ctx, field)
 			case "updatedAt":
@@ -771,6 +1169,140 @@ func (ec *executionContext) fieldContext_Mutation_updateExpense(ctx context.Cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updateExpense_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createIncome(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createIncome(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().CreateIncome(rctx, fc.Args["input"].(model.NewIncome))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Income)
+	fc.Result = res
+	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createIncome(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Income_id(ctx, field)
+			case "description":
+				return ec.fieldContext_Income_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Income_value(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Income_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_Income_updatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Income", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createIncome_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateIncome(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateIncome(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().UpdateIncome(rctx, fc.Args["id"].(int), fc.Args["input"].(model.UpdateIncome))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Income)
+	fc.Result = res
+	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updateIncome(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Income_id(ctx, field)
+			case "description":
+				return ec.fieldContext_Income_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Income_value(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Income_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_Income_updatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Income", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateIncome_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -818,10 +1350,10 @@ func (ec *executionContext) fieldContext_Query_listExpense(_ context.Context, fi
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Expense_id(ctx, field)
-			case "name":
-				return ec.fieldContext_Expense_name(ctx, field)
-			case "price":
-				return ec.fieldContext_Expense_price(ctx, field)
+			case "description":
+				return ec.fieldContext_Expense_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Expense_value(ctx, field)
 			case "createdAt":
 				return ec.fieldContext_Expense_createdAt(ctx, field)
 			case "updatedAt":
@@ -874,10 +1406,10 @@ func (ec *executionContext) fieldContext_Query_getExpense(ctx context.Context, f
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_Expense_id(ctx, field)
-			case "name":
-				return ec.fieldContext_Expense_name(ctx, field)
-			case "price":
-				return ec.fieldContext_Expense_price(ctx, field)
+			case "description":
+				return ec.fieldContext_Expense_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Expense_value(ctx, field)
 			case "createdAt":
 				return ec.fieldContext_Expense_createdAt(ctx, field)
 			case "updatedAt":
@@ -894,6 +1426,129 @@ func (ec *executionContext) fieldContext_Query_getExpense(ctx context.Context, f
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_getExpense_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_listIncome(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_listIncome(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().ListIncome(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Income)
+	fc.Result = res
+	return ec.marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncomeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_listIncome(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Income_id(ctx, field)
+			case "description":
+				return ec.fieldContext_Income_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Income_value(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Income_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_Income_updatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Income", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_getIncome(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getIncome(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().GetIncome(rctx, fc.Args["id"].(int))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Income)
+	fc.Result = res
+	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_getIncome(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Income_id(ctx, field)
+			case "description":
+				return ec.fieldContext_Income_description(ctx, field)
+			case "value":
+				return ec.fieldContext_Income_value(ctx, field)
+			case "createdAt":
+				return ec.fieldContext_Income_createdAt(ctx, field)
+			case "updatedAt":
+				return ec.fieldContext_Income_updatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Income", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_getIncome_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -2809,27 +3464,61 @@ func (ec *executionContext) unmarshalInputNewExpense(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"name", "price"}
+	fieldsInOrder := [...]string{"description", "value"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "name":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Name = data
-		case "price":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("price"))
+			it.Description = data
+		case "value":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("value"))
 			data, err := ec.unmarshalNDecimal2githubᚗcomᚋshopspringᚋdecimalᚐDecimal(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Price = data
+			it.Value = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputNewIncome(ctx context.Context, obj interface{}) (model.NewIncome, error) {
+	var it model.NewIncome
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"description", "value"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "value":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("value"))
+			data, err := ec.unmarshalNDecimal2githubᚗcomᚋshopspringᚋdecimalᚐDecimal(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Value = data
 		}
 	}
 
@@ -2843,27 +3532,61 @@ func (ec *executionContext) unmarshalInputUpdateExpense(ctx context.Context, obj
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"name", "price"}
+	fieldsInOrder := [...]string{"description", "value"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "name":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Name = data
-		case "price":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("price"))
+			it.Description = data
+		case "value":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("value"))
 			data, err := ec.unmarshalNDecimal2githubᚗcomᚋshopspringᚋdecimalᚐDecimal(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Price = data
+			it.Value = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputUpdateIncome(ctx context.Context, obj interface{}) (model.UpdateIncome, error) {
+	var it model.UpdateIncome
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"description", "value"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "value":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("value"))
+			data, err := ec.unmarshalNDecimal2githubᚗcomᚋshopspringᚋdecimalᚐDecimal(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Value = data
 		}
 	}
 
@@ -2894,13 +3617,13 @@ func (ec *executionContext) _Expense(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "name":
-			out.Values[i] = ec._Expense_name(ctx, field, obj)
+		case "description":
+			out.Values[i] = ec._Expense_description(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "price":
-			out.Values[i] = ec._Expense_price(ctx, field, obj)
+		case "value":
+			out.Values[i] = ec._Expense_value(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -2911,6 +3634,65 @@ func (ec *executionContext) _Expense(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "updatedAt":
 			out.Values[i] = ec._Expense_updatedAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var incomeImplementors = []string{"Income"}
+
+func (ec *executionContext) _Income(ctx context.Context, sel ast.SelectionSet, obj *model.Income) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, incomeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Income")
+		case "id":
+			out.Values[i] = ec._Income_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "description":
+			out.Values[i] = ec._Income_description(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "value":
+			out.Values[i] = ec._Income_value(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createdAt":
+			out.Values[i] = ec._Income_createdAt(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatedAt":
+			out.Values[i] = ec._Income_updatedAt(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -2966,6 +3748,20 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updateExpense":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateExpense(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createIncome":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createIncome(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateIncome":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateIncome(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -3044,6 +3840,50 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_getExpense(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "listIncome":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_listIncome(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "getIncome":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_getIncome(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -3495,6 +4335,64 @@ func (ec *executionContext) marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacampos
 	return ec._Expense(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx context.Context, sel ast.SelectionSet, v model.Income) graphql.Marshaler {
+	return ec._Income(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncomeᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Income) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx context.Context, sel ast.SelectionSet, v *model.Income) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Income(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
 	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -3515,6 +4413,11 @@ func (ec *executionContext) unmarshalNNewExpense2githubᚗcomᚋisaacmirandacamp
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalNNewIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewIncome(ctx context.Context, v interface{}) (model.NewIncome, error) {
+	res, err := ec.unmarshalInputNewIncome(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -3532,6 +4435,11 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 
 func (ec *executionContext) unmarshalNUpdateExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateExpense(ctx context.Context, v interface{}) (model.UpdateExpense, error) {
 	res, err := ec.unmarshalInputUpdateExpense(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNUpdateIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateIncome(ctx context.Context, v interface{}) (model.UpdateIncome, error) {
+	res, err := ec.unmarshalInputUpdateIncome(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

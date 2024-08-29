@@ -13,11 +13,11 @@ func (uc *expenseUseCase) GetExpense(ctx context.Context, id *int) (*model.Expen
 	}
 
 	expense := &model.Expense{
-		ID:        int(result.ID),
-		Name:      result.Name,
-		Price:     result.Price,
-		CreatedAt: result.CreatedAt.String(),
-		UpdatedAt: result.UpdatedAt.String(),
+		ID:          int(result.ID),
+		Description: result.Description,
+		Value:       result.Value,
+		CreatedAt:   result.CreatedAt.String(),
+		UpdatedAt:   result.UpdatedAt.String(),
 	}
 
 	return expense, nil

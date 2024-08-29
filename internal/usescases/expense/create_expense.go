@@ -9,18 +9,18 @@ import (
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
 	returned, err := c.repo.CreateExpense(ctx, persistence.CreateExpenseParams{
-		Name:  input.Name,
-		Price: input.Price,
+		Description: input.Description,
+		Value:       input.Value,
 	})
 	if err != nil {
 		return nil, err
 	}
 	expense := &model.Expense{
-		ID:        int(returned.ID),
-		Price:     returned.Price,
-		Name:      returned.Name,
-		CreatedAt: returned.CreatedAt.String(),
-		UpdatedAt: returned.UpdatedAt.String(),
+		ID:          int(returned.ID),
+		Value:       returned.Value,
+		Description: returned.Description,
+		CreatedAt:   returned.CreatedAt.String(),
+		UpdatedAt:   returned.UpdatedAt.String(),
 	}
 	return expense, nil
 }

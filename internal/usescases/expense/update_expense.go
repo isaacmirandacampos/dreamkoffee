@@ -9,19 +9,19 @@ import (
 
 func (c *expenseUseCase) UpdateExpense(ctx context.Context, id *int, input model.UpdateExpense) (*model.Expense, error) {
 	updated, err := c.repo.UpdateExpense(ctx, persistence.UpdateExpenseParams{
-		ID:    int32(*id),
-		Name:  input.Name,
-		Price: input.Price,
+		ID:          int32(*id),
+		Description: input.Description,
+		Value:       input.Value,
 	})
 	if err != nil {
 		return nil, err
 	}
 	expense := &model.Expense{
-		ID:        int(updated.ID),
-		Price:     updated.Price,
-		Name:      updated.Name,
-		CreatedAt: updated.CreatedAt.String(),
-		UpdatedAt: updated.UpdatedAt.String(),
+		ID:          int(updated.ID),
+		Value:       updated.Value,
+		Description: updated.Description,
+		CreatedAt:   updated.CreatedAt.String(),
+		UpdatedAt:   updated.UpdatedAt.String(),
 	}
 	return expense, nil
 }
