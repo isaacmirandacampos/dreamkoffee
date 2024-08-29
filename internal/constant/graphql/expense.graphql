@@ -8,11 +8,6 @@ type Expense {
   updatedAt: String!
 }
 
-type Query {
-  listExpense: [Expense!]!
-  getExpense(id: Int!): Expense!
-}
-
 input NewExpense {
   name: String!
   price: Decimal!
@@ -21,6 +16,11 @@ input NewExpense {
 input UpdateExpense {
   name: String!
   price: Decimal!
+}
+
+type Query {
+  listExpense: [Expense!]!
+  getExpense(id: Int!): Expense!
 }
 
 type Mutation {

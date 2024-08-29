@@ -3,7 +3,7 @@ package expense
 import (
 	"context"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 )
 

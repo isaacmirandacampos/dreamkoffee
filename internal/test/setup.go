@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql"
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 	"github.com/isaacmirandacampos/finkoffee/internal/test/connection"
 	_ "github.com/lib/pq"

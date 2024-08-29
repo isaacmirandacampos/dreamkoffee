@@ -3,10 +3,10 @@ package expense
 import (
 	"context"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
 )
 
-func (uc *expenseUseCase) GetExpenses(ctx context.Context, id *int) (*model.Expense, error) {
+func (uc *expenseUseCase) GetExpense(ctx context.Context, id *int) (*model.Expense, error) {
 	result, err := uc.repo.GetExpense(ctx, int32(*id))
 	if err != nil {
 		return nil, err

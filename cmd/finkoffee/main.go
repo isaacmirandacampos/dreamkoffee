@@ -8,9 +8,9 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 
 	"github.com/isaacmirandacampos/finkoffee/configs"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql"
+	"github.com/isaacmirandacampos/finkoffee/internal/applications/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/infrastructure/database"
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql"
-	"github.com/isaacmirandacampos/finkoffee/internal/interface/graphql/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 )
 
