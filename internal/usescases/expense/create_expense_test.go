@@ -2,6 +2,7 @@ package expense_test
 
 import (
 	"context"
+	"errors"
 	"testing"
 	"time"
 
@@ -54,13 +55,14 @@ func TestCreateExpense(t *testing.T) {
 	})
 
 	t.Run("CreateExpenseError", func(t *testing.T) {
-		mockRepo.EXPECT().CreateExpense(ctx, gomock.Any()).Times(1).Return(persistence.Expense{}, utils.ErrorHandling(ctx, 400, "bad_request", "Could not create expense"))
+		mockRepo.EXPECT().CreateExpense(ctx, gomock.Any()).Times(1).Return(persistence.Expense{}, errors.New("Invalid input"))
 		result, err := useCase.CreateExpense(ctx, input)
-		if result != nil {
-			t.Fatalf("Expected nil")
-		}
 		if err == nil {
-			t.Fatalf("Expected error")
+			t.Fatalf("Was expected error")
 		}
+		if result != nil {
+			t.Fatalf("Was expected nil in result")
+		}
+		assert.Equal(t, "input: Could not create expense", err.Error())
 	})
 }
