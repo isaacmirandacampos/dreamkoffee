@@ -2,7 +2,7 @@ package graph
 
 import (
 	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
-	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/finkoffee/internal/domain"
 )
 
 // This file will not be regenerated automatically.
@@ -10,6 +10,6 @@ import (
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	Conn     *persistence.Queries
+	Repo     *domain.Repository
 	Expenses []*model.Expense
 }

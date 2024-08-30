@@ -9,13 +9,13 @@ build:
 test:
 	go test ./...
 
-mockgen:
-	mockgen -source=internal/storage/persistence/db.go -destination=internal/tests/mocks/expense.sql.mocks.go -package=mocks
+generate_mock:
+	mockgen -source internal/domain/repository.go -destination internal/test/mocks/repository.go -package=mocks
 
-graphql:
+generate_graph:
 	go run github.com/99designs/gqlgen generate
 
-queries:
+generate_query:
 	sqlc generate
 
 create_migration:

@@ -8,6 +8,7 @@ import (
 
 	"github.com/isaacmirandacampos/finkoffee/configs"
 	"github.com/isaacmirandacampos/finkoffee/internal/applications"
+	"github.com/isaacmirandacampos/finkoffee/internal/domain"
 	"github.com/isaacmirandacampos/finkoffee/internal/infrastructure/database"
 	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
 )
@@ -21,9 +22,9 @@ func main() {
 		panic(err)
 	}
 	defer connection.Close()
-	conn := persistence.New(connection)
-
-	srv := applications.Initialize(conn)
+	repo := persistence.New(connection)
+	repository := domain.NewRepository(repo)
+	srv := applications.Initialize(&repository)
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 

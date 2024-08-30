@@ -7,28 +7,33 @@ package graph
 import (
 	"context"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
 	"github.com/isaacmirandacampos/finkoffee/internal/usescases/expense"
 )
 
 // CreateExpense is the resolver for the createExpense field.
 func (r *mutationResolver) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
-	return expense.NewExpenseUseCase(r.Conn).CreateExpense(ctx, input)
+	result, err := expense.NewExpenseUseCase(*r.Repo).CreateExpense(ctx, input)
+	if err != nil {
+		graphql.AddError(ctx, err)
+	}
+	return result, nil
 }
 
 // UpdateExpense is the resolver for the updateExpense field.
 func (r *mutationResolver) UpdateExpense(ctx context.Context, id int, input model.UpdateExpense) (*model.Expense, error) {
-	return expense.NewExpenseUseCase(r.Conn).UpdateExpense(ctx, &id, input)
+	return expense.NewExpenseUseCase(*r.Repo).UpdateExpense(ctx, &id, input)
 }
 
 // ListExpense is the resolver for the listExpense field.
 func (r *queryResolver) ListExpense(ctx context.Context) ([]*model.Expense, error) {
-	return expense.NewExpenseUseCase(r.Conn).ListExpenses(ctx)
+	return expense.NewExpenseUseCase(*r.Repo).ListExpenses(ctx)
 }
 
 // GetExpense is the resolver for the getExpense field.
 func (r *queryResolver) GetExpense(ctx context.Context, id int) (*model.Expense, error) {
-	return expense.NewExpenseUseCase(r.Conn).GetExpense(ctx, &id)
+	return expense.NewExpenseUseCase(*r.Repo).GetExpense(ctx, &id)
 }
 
 // Mutation returns MutationResolver implementation.

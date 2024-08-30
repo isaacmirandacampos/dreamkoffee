@@ -11,8 +11,7 @@ import (
 func (c *expenseUseCase) UpdateExpense(ctx context.Context, id *int, input model.UpdateExpense) (*model.Expense, error) {
 	_, err := c.repo.GetExpense(ctx, int32(*id))
 	if err != nil {
-		utils.ErrorHandling(ctx, 404, "expense_not_found", "Expense not found", err.Error())
-		return nil, nil
+		return nil, utils.ErrorHandling(ctx, 404, "expense_not_found", "Expense not found", err.Error())
 	}
 	updated, err := c.repo.UpdateExpense(ctx, persistence.UpdateExpenseParams{
 		ID:          int32(*id),
@@ -20,8 +19,7 @@ func (c *expenseUseCase) UpdateExpense(ctx context.Context, id *int, input model
 		Value:       input.Value,
 	})
 	if err != nil {
-		utils.ErrorHandling(ctx, 400, "bad_request", "Could not update expense", err.Error())
-		return nil, nil
+		return nil, utils.ErrorHandling(ctx, 400, "bad_request", "Could not update expense", err.Error())
 	}
 	expense := &model.Expense{
 		ID:          int(updated.ID),

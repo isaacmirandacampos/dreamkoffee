@@ -14,8 +14,7 @@ func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpen
 		Value:       input.Value,
 	})
 	if err != nil {
-		utils.ErrorHandling(ctx, 400, "bad_request", "Could not create expense", err.Error())
-		return nil, nil
+		return nil, utils.ErrorHandling(ctx, 400, "bad_request", "Could not create expense", err.Error())
 	}
 	expense := &model.Expense{
 		ID:          int(returned.ID),

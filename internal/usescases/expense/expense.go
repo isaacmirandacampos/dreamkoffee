@@ -1,13 +1,11 @@
 package expense
 
-import (
-	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
-)
+import "github.com/isaacmirandacampos/finkoffee/internal/domain"
 
 type expenseUseCase struct {
-	repo *persistence.Queries
+	repo domain.Repository
 }
 
-func NewExpenseUseCase(repo *persistence.Queries) *expenseUseCase {
+func NewExpenseUseCase(repo domain.Repository) *expenseUseCase {
 	return &expenseUseCase{repo: repo}
 }
