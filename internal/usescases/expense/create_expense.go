@@ -4,17 +4,26 @@ import (
 	"context"
 
 	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/domain/entity"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 )
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
-	if !input.Value.IsPositive() {
-		return nil, utils.ErrorHandling(ctx, 400, "value_must_be_positive", "Value must be positive", input.Value)
+	expenseEntity := entity.New(
+		&entity.Expense{
+			Description: input.Description,
+			Value:       input.Value,
+		},
+	)
+	err := expenseEntity.ValueIsValid()
+	if err != nil {
+		return nil, utils.ErrorHandling(ctx, 400, "value_must_be_positive", "Value must be positive", err.Error())
 	}
+
 	returned, err := c.repo.CreateExpense(ctx, persistence.CreateExpenseParams{
-		Description: input.Description,
-		Value:       input.Value,
+		Description: expenseEntity.Description,
+		Value:       expenseEntity.Value,
 	})
 	if err != nil {
 		return nil, utils.ErrorHandling(ctx, 500, "INTERNAL_SERVER_ERROR", "Could not create expense", err.Error())
