@@ -10,7 +10,7 @@ import (
 func (uc *expenseUseCase) ListExpenses(ctx context.Context) ([]*model.Expense, error) {
 	results, err := uc.repo.ListExpenses(ctx)
 	if err != nil {
-		return nil, utils.ErrorHandling(ctx, 500, "internal_server_error", "Could not list expenses", err.Error())
+		return nil, utils.ErrorHandling(ctx, 500, "INTERNAL_SERVER_ERROR", "Could not list expenses", err.Error())
 	}
 	expenses := make([]*model.Expense, 0, len(results))
 

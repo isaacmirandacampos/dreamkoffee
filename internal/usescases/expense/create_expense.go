@@ -10,7 +10,7 @@ import (
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
 	if !input.Value.IsPositive() {
-		return nil, utils.ErrorHandling(ctx, 400, "value_should_be_positive", "Value should be a positive value", "Value can't be negative")
+		return nil, utils.ErrorHandling(ctx, 400, "value_must_be_positive", "Value must be positive", input.Value)
 	}
 	returned, err := c.repo.CreateExpense(ctx, persistence.CreateExpenseParams{
 		Description: input.Description,

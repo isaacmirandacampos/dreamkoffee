@@ -59,7 +59,7 @@ func TestCreateExpense(t *testing.T) {
 			Value:       value,
 		}
 		_, err = useCase.CreateExpense(ctx, input)
-		assert.EqualError(t, err, "input: Value should be a positive value")
+		assert.EqualError(t, err, "input: Value must be positive")
 	})
 
 	t.Run("Should fail create a expense when run the insert query", func(t *testing.T) {
