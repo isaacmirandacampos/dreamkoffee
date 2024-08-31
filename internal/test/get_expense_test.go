@@ -62,7 +62,7 @@ func TestGetExpense(t *testing.T) {
 		err = helper.TransformBody(resp.Body, &response)
 		assert.NoError(t, err)
 		assert.Equal(t, "Expense not found", response.Errors[0].Message)
-		assert.Equal(t, "expense_not_found", response.Errors[0].Extensions.Error)
+		assert.Equal(t, "EXPENSE_NOT_FOUND", response.Errors[0].Extensions.Error)
 		assert.Equal(t, 404, response.Errors[0].Extensions.StatusCode)
 	})
 }
