@@ -7,23 +7,19 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/mocks"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/usescases/expense"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
 
-func RepositoryMock(repo *mocks.MockRepository) domain.Repository {
-	return repo
-}
-
 func TestGetExpense(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	mockRepo := mocks.NewMockRepository(ctrl)
-	repository := RepositoryMock(mockRepo)
+	repository := helper.RepositoryMock(mockRepo)
 	useCase := expense.NewExpenseUseCase(repository)
 	ctx := context.Background()
 	value, err := utils.UnmarshalDecimal("5.0")
