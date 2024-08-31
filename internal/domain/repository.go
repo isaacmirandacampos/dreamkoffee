@@ -3,7 +3,7 @@ package domain
 import (
 	"context"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
 )
 
 type Repository interface {

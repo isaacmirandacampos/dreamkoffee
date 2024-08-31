@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
-	"github.com/isaacmirandacampos/finkoffee/internal/domain"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
 )
 
 // This file will not be regenerated automatically.

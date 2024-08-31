@@ -6,11 +6,11 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/playground"
 
-	"github.com/isaacmirandacampos/finkoffee/configs"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications"
-	"github.com/isaacmirandacampos/finkoffee/internal/domain"
-	"github.com/isaacmirandacampos/finkoffee/internal/infrastructure/database"
-	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/configs"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/infrastructure/database"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
 )
 
 const defaultPort = "8080"

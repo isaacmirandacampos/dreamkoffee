@@ -3,8 +3,8 @@ package expense
 import (
 	"context"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
-	"github.com/isaacmirandacampos/finkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 )
 
 func (uc *expenseUseCase) GetExpense(ctx context.Context, id *int) (*model.Expense, error) {

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/isaacmirandacampos/finkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 	"github.com/shopspring/decimal"
 	"github.com/vektah/gqlparser/v2/ast"
 )

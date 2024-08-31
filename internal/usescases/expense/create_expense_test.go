@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
-	"github.com/isaacmirandacampos/finkoffee/internal/domain"
-	"github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
-	"github.com/isaacmirandacampos/finkoffee/internal/test/mocks"
-	"github.com/isaacmirandacampos/finkoffee/internal/usescases/expense"
-	"github.com/isaacmirandacampos/finkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/test/mocks"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/usescases/expense"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
 

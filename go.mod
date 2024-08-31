@@ -1,4 +1,4 @@
-module github.com/isaacmirandacampos/finkoffee
+module github.com/isaacmirandacampos/dreamkoffee
 
 go 1.22.5
 

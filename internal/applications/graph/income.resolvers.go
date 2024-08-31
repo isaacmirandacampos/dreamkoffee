@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
 )
 
 // CreateIncome is the resolver for the createIncome field.

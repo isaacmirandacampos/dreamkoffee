@@ -1,6 +1,6 @@
 package expense
 
-import "github.com/isaacmirandacampos/finkoffee/internal/domain"
+import "github.com/isaacmirandacampos/dreamkoffee/internal/domain"
 
 type expenseUseCase struct {
 	repo domain.Repository

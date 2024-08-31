@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/test/helper"
-	"github.com/isaacmirandacampos/finkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
 

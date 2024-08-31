@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	persistence "github.com/isaacmirandacampos/finkoffee/internal/storage/persistence"
+	persistence "github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
 )
 
 // MockRepository is a mock of Repository interface.

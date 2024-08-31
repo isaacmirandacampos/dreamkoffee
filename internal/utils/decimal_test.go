@@ -3,7 +3,7 @@ package utils_test
 import (
 	"testing"
 
-	"github.com/isaacmirandacampos/finkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 )

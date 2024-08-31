@@ -2,9 +2,9 @@ package applications
 
 import (
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
-	"github.com/isaacmirandacampos/finkoffee/internal/domain"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
 )
 
 func Initialize(repo *domain.Repository) (srv *handler.Server) {

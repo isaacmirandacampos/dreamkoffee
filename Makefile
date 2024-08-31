@@ -1,10 +1,10 @@
 include .env
 
 start:
-	go run cmd/finkoffee/main.go
+	go run cmd/dreamkoffee/main.go
 
 build:
-	go build -o bin/finkoffee cmd/finkoffee/main.go
+	go build -o bin/dreamkoffee cmd/dreamkoffee/main.go
 
 test:
 	go test ./...

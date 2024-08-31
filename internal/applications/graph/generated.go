@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/isaacmirandacampos/finkoffee/internal/applications/graph/model"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
 	"github.com/shopspring/decimal"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
@@ -446,7 +446,7 @@ func (ec *executionContext) field_Mutation_createExpense_args(ctx context.Contex
 	var arg0 model.NewExpense
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewExpense(ctx, tmp)
+		arg0, err = ec.unmarshalNNewExpense2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewExpense(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -461,7 +461,7 @@ func (ec *executionContext) field_Mutation_createIncome_args(ctx context.Context
 	var arg0 model.NewIncome
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewIncome(ctx, tmp)
+		arg0, err = ec.unmarshalNNewIncome2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewIncome(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -485,7 +485,7 @@ func (ec *executionContext) field_Mutation_updateExpense_args(ctx context.Contex
 	var arg1 model.UpdateExpense
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateExpense(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateExpense2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateExpense(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -509,7 +509,7 @@ func (ec *executionContext) field_Mutation_updateIncome_args(ctx context.Context
 	var arg1 model.UpdateIncome
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateIncome(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateIncome2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateIncome(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1069,7 +1069,7 @@ func (ec *executionContext) _Mutation_createExpense(ctx context.Context, field g
 	}
 	res := resTmp.(*model.Expense)
 	fc.Result = res
-	return ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, field.Selections, res)
+	return ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createExpense(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1136,7 +1136,7 @@ func (ec *executionContext) _Mutation_updateExpense(ctx context.Context, field g
 	}
 	res := resTmp.(*model.Expense)
 	fc.Result = res
-	return ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, field.Selections, res)
+	return ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateExpense(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1203,7 +1203,7 @@ func (ec *executionContext) _Mutation_createIncome(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Income)
 	fc.Result = res
-	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
+	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createIncome(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1270,7 +1270,7 @@ func (ec *executionContext) _Mutation_updateIncome(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Income)
 	fc.Result = res
-	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
+	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateIncome(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1337,7 +1337,7 @@ func (ec *executionContext) _Query_listExpense(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*model.Expense)
 	fc.Result = res
-	return ec.marshalNExpense2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpenseᚄ(ctx, field.Selections, res)
+	return ec.marshalNExpense2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpenseᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_listExpense(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1393,7 +1393,7 @@ func (ec *executionContext) _Query_getExpense(ctx context.Context, field graphql
 	}
 	res := resTmp.(*model.Expense)
 	fc.Result = res
-	return ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, field.Selections, res)
+	return ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_getExpense(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1460,7 +1460,7 @@ func (ec *executionContext) _Query_listIncome(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*model.Income)
 	fc.Result = res
-	return ec.marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncomeᚄ(ctx, field.Selections, res)
+	return ec.marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncomeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_listIncome(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1516,7 +1516,7 @@ func (ec *executionContext) _Query_getIncome(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*model.Income)
 	fc.Result = res
-	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
+	return ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_getIncome(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4277,11 +4277,11 @@ func (ec *executionContext) marshalNDecimal2githubᚗcomᚋshopspringᚋdecimal�
 	return ec._Decimal(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx context.Context, sel ast.SelectionSet, v model.Expense) graphql.Marshaler {
+func (ec *executionContext) marshalNExpense2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx context.Context, sel ast.SelectionSet, v model.Expense) graphql.Marshaler {
 	return ec._Expense(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNExpense2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpenseᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Expense) graphql.Marshaler {
+func (ec *executionContext) marshalNExpense2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpenseᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Expense) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4305,7 +4305,7 @@ func (ec *executionContext) marshalNExpense2ᚕᚖgithubᚗcomᚋisaacmirandacam
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, sel, v[i])
+			ret[i] = ec.marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4325,7 +4325,7 @@ func (ec *executionContext) marshalNExpense2ᚕᚖgithubᚗcomᚋisaacmirandacam
 	return ret
 }
 
-func (ec *executionContext) marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx context.Context, sel ast.SelectionSet, v *model.Expense) graphql.Marshaler {
+func (ec *executionContext) marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐExpense(ctx context.Context, sel ast.SelectionSet, v *model.Expense) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -4335,11 +4335,11 @@ func (ec *executionContext) marshalNExpense2ᚖgithubᚗcomᚋisaacmirandacampos
 	return ec._Expense(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx context.Context, sel ast.SelectionSet, v model.Income) graphql.Marshaler {
+func (ec *executionContext) marshalNIncome2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx context.Context, sel ast.SelectionSet, v model.Income) graphql.Marshaler {
 	return ec._Income(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncomeᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Income) graphql.Marshaler {
+func (ec *executionContext) marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncomeᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Income) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4363,7 +4363,7 @@ func (ec *executionContext) marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamp
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, sel, v[i])
+			ret[i] = ec.marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4383,7 +4383,7 @@ func (ec *executionContext) marshalNIncome2ᚕᚖgithubᚗcomᚋisaacmirandacamp
 	return ret
 }
 
-func (ec *executionContext) marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx context.Context, sel ast.SelectionSet, v *model.Income) graphql.Marshaler {
+func (ec *executionContext) marshalNIncome2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐIncome(ctx context.Context, sel ast.SelectionSet, v *model.Income) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -4408,12 +4408,12 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) unmarshalNNewExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewExpense(ctx context.Context, v interface{}) (model.NewExpense, error) {
+func (ec *executionContext) unmarshalNNewExpense2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewExpense(ctx context.Context, v interface{}) (model.NewExpense, error) {
 	res, err := ec.unmarshalInputNewExpense(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewIncome(ctx context.Context, v interface{}) (model.NewIncome, error) {
+func (ec *executionContext) unmarshalNNewIncome2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐNewIncome(ctx context.Context, v interface{}) (model.NewIncome, error) {
 	res, err := ec.unmarshalInputNewIncome(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -4433,12 +4433,12 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) unmarshalNUpdateExpense2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateExpense(ctx context.Context, v interface{}) (model.UpdateExpense, error) {
+func (ec *executionContext) unmarshalNUpdateExpense2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateExpense(ctx context.Context, v interface{}) (model.UpdateExpense, error) {
 	res, err := ec.unmarshalInputUpdateExpense(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNUpdateIncome2githubᚗcomᚋisaacmirandacamposᚋfinkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateIncome(ctx context.Context, v interface{}) (model.UpdateIncome, error) {
+func (ec *executionContext) unmarshalNUpdateIncome2githubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋgraphqlᚋmodelᚐUpdateIncome(ctx context.Context, v interface{}) (model.UpdateIncome, error) {
 	res, err := ec.unmarshalInputUpdateIncome(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
