@@ -9,12 +9,15 @@ import (
 )
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
+	if !input.Value.IsPositive() {
+		return nil, utils.ErrorHandling(ctx, 400, "value_should_be_positive", "Value should be a positive value", "Value can't be negative")
+	}
 	returned, err := c.repo.CreateExpense(ctx, persistence.CreateExpenseParams{
 		Description: input.Description,
 		Value:       input.Value,
 	})
 	if err != nil {
-		return nil, utils.ErrorHandling(ctx, 400, "bad_request", "Could not create expense", err.Error())
+		return nil, utils.ErrorHandling(ctx, 500, "INTERNAL_SERVER_ERROR", "Could not create expense", err.Error())
 	}
 	expense := &model.Expense{
 		ID:          int(returned.ID),

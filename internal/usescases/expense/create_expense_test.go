@@ -8,32 +8,29 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/applications/graph/model"
-	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/mocks"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/usescases/expense"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
 	"github.com/stretchr/testify/assert"
 )
 
-func RepositoryMock(repo *mocks.MockRepository) domain.Repository {
-	return repo
-}
-
 func TestCreateExpense(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	mockRepo := mocks.NewMockRepository(ctrl)
-	repository := RepositoryMock(mockRepo)
+	repository := helper.RepositoryMock(mockRepo)
 	useCase := expense.NewExpenseUseCase(repository)
 	ctx := context.Background()
-	value, err := utils.UnmarshalDecimal("5.0")
-	assert.NoError(t, err)
-	input := model.NewExpense{
-		Description: "Coffee",
-		Value:       value,
-	}
-	t.Run("CreateExpense", func(t *testing.T) {
+
+	t.Run("Should create a expense", func(t *testing.T) {
+		value, err := utils.UnmarshalDecimal("5.0")
+		assert.NoError(t, err)
+		input := model.NewExpense{
+			Description: "Coffee",
+			Value:       value,
+		}
 		expectedExpense := persistence.Expense{
 			ID:          1,
 			Description: "Coffee",
@@ -54,7 +51,24 @@ func TestCreateExpense(t *testing.T) {
 		assert.Equal(t, expectedExpense.UpdatedAt.String(), result.UpdatedAt)
 	})
 
-	t.Run("CreateExpenseError", func(t *testing.T) {
+	t.Run("Shouldn't accept create a expense with negative value", func(t *testing.T) {
+		value, err := utils.UnmarshalDecimal("-5.0")
+		assert.NoError(t, err)
+		input := model.NewExpense{
+			Description: "Coffee",
+			Value:       value,
+		}
+		_, err = useCase.CreateExpense(ctx, input)
+		assert.EqualError(t, err, "input: Value should be a positive value")
+	})
+
+	t.Run("Should fail create a expense when run the insert query", func(t *testing.T) {
+		value, err := utils.UnmarshalDecimal("5.0")
+		assert.NoError(t, err)
+		input := model.NewExpense{
+			Description: "Coffee",
+			Value:       value,
+		}
 		mockRepo.EXPECT().CreateExpense(ctx, gomock.Any()).Times(1).Return(persistence.Expense{}, errors.New("Invalid input"))
 		result, err := useCase.CreateExpense(ctx, input)
 		if err == nil {
