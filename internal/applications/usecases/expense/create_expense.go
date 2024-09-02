@@ -12,9 +12,6 @@ import (
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
 	userid := middleware.GetUserID(ctx)
-	print("------------------------------------")
-	print(userid)
-	print("------------------------------------")
 	expenseEntity := entity.NewExpense(
 		&entity.Expense{
 			Description: input.Description,
@@ -29,6 +26,7 @@ func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpen
 	returned, err := c.repo.CreateExpense(ctx, persistence.CreateExpenseParams{
 		Description: expenseEntity.Description,
 		Value:       expenseEntity.Value,
+		UserID:      userid,
 	})
 	if err != nil {
 		return nil, error_handling.Graphql(ctx, 500, "INTERNAL_SERVER_ERROR", "Could not create expense", err.Error())

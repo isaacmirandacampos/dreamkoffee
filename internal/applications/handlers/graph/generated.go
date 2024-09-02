@@ -60,7 +60,6 @@ type ComplexityRoot struct {
 		PaidAt      func(childComplexity int) int
 		PaymentAt   func(childComplexity int) int
 		UpdatedAt   func(childComplexity int) int
-		User        func(childComplexity int) int
 		Value       func(childComplexity int) int
 	}
 
@@ -170,13 +169,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Expense.UpdatedAt(childComplexity), true
-
-	case "Expense.user":
-		if e.complexity.Expense.User == nil {
-			break
-		}
-
-		return e.complexity.Expense.User(childComplexity), true
 
 	case "Expense.value":
 		if e.complexity.Expense.Value == nil {
@@ -402,7 +394,6 @@ var sources = []*ast.Source{
   value: Decimal!
   paidAt: Date!
   note: String!
-  user: User!
   paymentAt: Date!
   createdAt: String!
   updatedAt: String!
@@ -875,62 +866,6 @@ func (ec *executionContext) fieldContext_Expense_note(_ context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _Expense_user(ctx context.Context, field graphql.CollectedField, obj *model.Expense) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Expense_user(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.User, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.User)
-	fc.Result = res
-	return ec.marshalNUser2ᚖgithubᚗcomᚋisaacmirandacamposᚋdreamkoffeeᚋinternalᚋapplicationsᚋhandlersᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Expense_user(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Expense",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_User_id(ctx, field)
-			case "full_name":
-				return ec.fieldContext_User_full_name(ctx, field)
-			case "email":
-				return ec.fieldContext_User_email(ctx, field)
-			case "createdAt":
-				return ec.fieldContext_User_createdAt(ctx, field)
-			case "updatedAt":
-				return ec.fieldContext_User_updatedAt(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Expense_paymentAt(ctx context.Context, field graphql.CollectedField, obj *model.Expense) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Expense_paymentAt(ctx, field)
 	if err != nil {
@@ -1132,8 +1067,6 @@ func (ec *executionContext) fieldContext_Mutation_createExpense(ctx context.Cont
 				return ec.fieldContext_Expense_paidAt(ctx, field)
 			case "note":
 				return ec.fieldContext_Expense_note(ctx, field)
-			case "user":
-				return ec.fieldContext_Expense_user(ctx, field)
 			case "paymentAt":
 				return ec.fieldContext_Expense_paymentAt(ctx, field)
 			case "createdAt":
@@ -1227,8 +1160,6 @@ func (ec *executionContext) fieldContext_Mutation_updateExpense(ctx context.Cont
 				return ec.fieldContext_Expense_paidAt(ctx, field)
 			case "note":
 				return ec.fieldContext_Expense_note(ctx, field)
-			case "user":
-				return ec.fieldContext_Expense_user(ctx, field)
 			case "paymentAt":
 				return ec.fieldContext_Expense_paymentAt(ctx, field)
 			case "createdAt":
@@ -1448,8 +1379,6 @@ func (ec *executionContext) fieldContext_Query_listExpense(_ context.Context, fi
 				return ec.fieldContext_Expense_paidAt(ctx, field)
 			case "note":
 				return ec.fieldContext_Expense_note(ctx, field)
-			case "user":
-				return ec.fieldContext_Expense_user(ctx, field)
 			case "paymentAt":
 				return ec.fieldContext_Expense_paymentAt(ctx, field)
 			case "createdAt":
@@ -1532,8 +1461,6 @@ func (ec *executionContext) fieldContext_Query_getExpense(ctx context.Context, f
 				return ec.fieldContext_Expense_paidAt(ctx, field)
 			case "note":
 				return ec.fieldContext_Expense_note(ctx, field)
-			case "user":
-				return ec.fieldContext_Expense_user(ctx, field)
 			case "paymentAt":
 				return ec.fieldContext_Expense_paymentAt(ctx, field)
 			case "createdAt":
@@ -3945,11 +3872,6 @@ func (ec *executionContext) _Expense(ctx context.Context, sel ast.SelectionSet, 
 			}
 		case "note":
 			out.Values[i] = ec._Expense_note(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "user":
-			out.Values[i] = ec._Expense_user(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

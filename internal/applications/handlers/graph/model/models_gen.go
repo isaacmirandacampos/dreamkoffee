@@ -21,7 +21,6 @@ type Expense struct {
 	Value       decimal.Decimal `json:"value"`
 	PaidAt      string          `json:"paidAt"`
 	Note        string          `json:"note"`
-	User        *User           `json:"user"`
 	PaymentAt   string          `json:"paymentAt"`
 	CreatedAt   string          `json:"createdAt"`
 	UpdatedAt   string          `json:"updatedAt"`

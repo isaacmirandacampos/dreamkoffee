@@ -4,7 +4,6 @@ type Expense {
   value: Decimal!
   paidAt: Date!
   note: String!
-  user: User!
   paymentAt: Date!
   createdAt: String!
   updatedAt: String!
