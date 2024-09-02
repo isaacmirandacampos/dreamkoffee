@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS expenses (
+  id SERIAL PRIMARY KEY,
+  value NUMERIC(10,2) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  user_id INT NOT NULL,
+  payment_at DATE NOT NULL DEFAULT CURRENT_DATE,
+  paid_at DATE,
+  note TEXT,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMP WITH TIME ZONE,
+  CONSTRAINT fk_user
+    FOREIGN KEY(user_id) 
+      REFERENCES users(id)
+);

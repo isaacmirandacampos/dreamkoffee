@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/isaacmirandacampos/dreamkoffee/internal/infrastructure/database/postgres/persistence"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
-	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/pkg/scalar"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,9 +16,15 @@ func TestCreateExpense(t *testing.T) {
 	Server, database, close := TestWithServerAndDB()
 	defer close()
 	t.Run("create_a_new_expense", func(t *testing.T) {
-		input := map[string]string{
+		user, err := database.Repo.CreateUser(context.Background(), persistence.CreateUserParams{
+			FullName: "Test User",
+			Email:    "teste@user.com",
+		})
+		assert.NoError(t, err)
+		input := map[string]interface{}{
 			"value":       "100.00",
 			"description": "Test Expense",
+			"userId":      user.ID,
 		}
 		query := helper.FabricateMutation("createExpense", input, []string{"description", "value"})
 		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
@@ -30,6 +37,6 @@ func TestCreateExpense(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, expenses)
 		assert.Equal(t, "Test Expense", expenses.Description)
-		assert.Equal(t, "\"100\"", utils.MarshalDecimal(expenses.Value))
+		assert.Equal(t, "\"100\"", scalar.MarshalDecimal(expenses.Value))
 	})
 }

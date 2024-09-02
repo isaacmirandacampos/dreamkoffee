@@ -4,17 +4,17 @@ schema:
 
 # Where should the generated server code go?
 exec:
-  filename: internal/applications/graphql/generated.go
+  filename: internal/applications/handlers/graph/generated.go
   package: graph
 
 model:
-  filename: internal/applications/graph/model/models_gen.go
+  filename: internal/applications/handlers/graph/model/models_gen.go
   package: model
 
 # Where should the resolver implementations go?
 resolver:
   layout: follow-schema
-  dir: internal/applications/graph
+  dir: internal/applications/handlers/graph
   package: graph
   filename_template: "{name}.resolvers.go"
   # Optional: turn on to not generate template comments above resolvers

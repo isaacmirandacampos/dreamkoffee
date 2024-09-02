@@ -2,6 +2,10 @@ type Expense {
   id: Int!
   description: String!
   value: Decimal!
+  paidAt: Date!
+  note: String!
+  user: User!
+  paymentAt: Date!
   createdAt: String!
   updatedAt: String!
 }
@@ -9,19 +13,25 @@ type Expense {
 input NewExpense {
   description: String!
   value: Decimal!
+  paidAt: Date
+  paymentAt: Date
+  note: String
 }
 
 input UpdateExpense {
   description: String!
   value: Decimal!
+  note: String
+  paidAt: Date
+  paymentAt: Date
 }
 
 extend type Query {
-  listExpense: [Expense!]!
-  getExpense(id: Int!): Expense!
+  listExpense: [Expense!]! @auth
+  getExpense(id: Int!): Expense! @auth
 }
 
 extend type Mutation {
-  createExpense(input: NewExpense!): Expense!
-  updateExpense(id: Int!, input: UpdateExpense!): Expense!
+  createExpense(input: NewExpense!): Expense! @auth
+  updateExpense(id: Int!, input: UpdateExpense!): Expense! @auth
 }

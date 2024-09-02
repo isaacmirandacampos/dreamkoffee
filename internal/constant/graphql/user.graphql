@@ -1,0 +1,27 @@
+type User {
+  id: Int!
+  full_name: String!
+  email: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input NewUser {
+  full_name: String!
+  email: String!
+  password: String!
+}
+
+input Authentication {
+  email: String!
+  password: String!
+}
+
+type AuthenticationResponse {
+  success: Boolean!
+}
+
+extend type Mutation {
+  createUser(input: NewUser!): User!
+  login(input: Authentication!): AuthenticationResponse!
+}

@@ -6,7 +6,7 @@ import (
 
 	"github.com/isaacmirandacampos/dreamkoffee/internal/applications"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/domain"
-	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/infrastructure/database/postgres/persistence"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/connection"
 	_ "github.com/lib/pq"
 )

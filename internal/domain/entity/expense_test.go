@@ -4,16 +4,16 @@ import (
 	"testing"
 
 	"github.com/isaacmirandacampos/dreamkoffee/internal/domain/entity"
-	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/pkg/scalar"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestExpenseEntity(t *testing.T) {
 	t.Run("Should validate the ValueIsValid method", func(t *testing.T) {
 		t.Run("Should value be valid", func(t *testing.T) {
-			value, err := utils.UnmarshalDecimal("10.0")
+			value, err := scalar.UnmarshalDecimal("10.0")
 			assert.NoError(t, err)
-			expense := entity.New(
+			expense := entity.NewExpense(
 				&entity.Expense{
 					Description: "Test Description",
 					Value:       value,
@@ -27,9 +27,9 @@ func TestExpenseEntity(t *testing.T) {
 		})
 
 		t.Run("Should error when value be negative", func(t *testing.T) {
-			value, err := utils.UnmarshalDecimal("-10")
+			value, err := scalar.UnmarshalDecimal("-10")
 			assert.NoError(t, err)
-			expense := entity.New(
+			expense := entity.NewExpense(
 				&entity.Expense{
 					Description: "Test Description",
 					Value:       value,
@@ -43,9 +43,9 @@ func TestExpenseEntity(t *testing.T) {
 		})
 
 		t.Run("Should error when value be zero", func(t *testing.T) {
-			value, err := utils.UnmarshalDecimal("0")
+			value, err := scalar.UnmarshalDecimal("0")
 			assert.NoError(t, err)
-			expense := entity.New(
+			expense := entity.NewExpense(
 				&entity.Expense{
 					Description: "Test Description",
 					Value:       value,

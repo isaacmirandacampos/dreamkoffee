@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/isaacmirandacampos/dreamkoffee/internal/storage/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/infrastructure/database/postgres/persistence"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
-	"github.com/isaacmirandacampos/dreamkoffee/internal/utils"
+	"github.com/isaacmirandacampos/dreamkoffee/pkg/scalar"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +16,7 @@ func TestGetExpense(t *testing.T) {
 	Server, database, close := TestWithServerAndDB()
 	defer close()
 	t.Run("get_a_existent_expense", func(t *testing.T) {
-		price, err := utils.UnmarshalDecimal(100)
+		price, err := scalar.UnmarshalDecimal(100)
 		if err != nil {
 			t.Fatalf("Could not unmarshal decimal: %v", err)
 		}
@@ -36,6 +36,7 @@ func TestGetExpense(t *testing.T) {
 		resp, close, err := helper.HttpRequest(query, Server.URL, "POST")
 		assert.NoError(t, err)
 		defer close()
+		defer resp.Body.Close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		var response struct {
 			Data struct {

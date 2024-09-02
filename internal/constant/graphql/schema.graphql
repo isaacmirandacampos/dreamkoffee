@@ -1,1 +1,4 @@
 scalar Decimal
+scalar Date
+
+directive @auth on FIELD_DEFINITION
