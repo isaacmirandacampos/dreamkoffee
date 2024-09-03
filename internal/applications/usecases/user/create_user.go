@@ -31,7 +31,7 @@ func (u *userUseCase) CreateUser(ctx context.Context, input *model.NewUser) (*mo
 		return nil, error_handling.Graphql(ctx, 422, "email_in_use", "Email already in use")
 	}
 
-	user, err := u.repo.CreateUser(ctx, persistence.CreateUserParams{
+	user, err := u.repo.CreateUser(ctx, &persistence.CreateUserParams{
 		FullName: userEntity.FullName,
 		Email:    userEntity.Email,
 		Password: userEntity.Password,

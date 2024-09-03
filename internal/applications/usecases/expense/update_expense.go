@@ -26,7 +26,7 @@ func (c *expenseUseCase) UpdateExpense(ctx context.Context, id *int, input model
 	if err != nil {
 		return nil, error_handling.Graphql(ctx, 404, "expense_not_found", "Expense not found", err.Error())
 	}
-	updated, err := c.repo.UpdateExpense(ctx, persistence.UpdateExpenseParams{
+	updated, err := c.repo.UpdateExpense(ctx, &persistence.UpdateExpenseParams{
 		ID:          expenseEntity.ID,
 		Description: expenseEntity.Description,
 		Value:       expenseEntity.Value,

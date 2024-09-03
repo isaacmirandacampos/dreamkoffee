@@ -1,4 +1,4 @@
-package test
+package e2e_test
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/isaacmirandacampos/dreamkoffee/internal/infrastructure/database/postgres/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/test"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/dreamkoffee/pkg/scalar"
 	"github.com/stretchr/testify/assert"
@@ -13,10 +14,10 @@ import (
 
 func TestCreateExpense(t *testing.T) {
 	t.Parallel()
-	Server, database, close := TestWithServerAndDB()
+	Server, database, close := test.TestWithServerAndDB()
 	defer close()
 	t.Run("create_a_new_expense", func(t *testing.T) {
-		user, err := database.Repo.CreateUser(context.Background(), persistence.CreateUserParams{
+		user, err := database.Repo.CreateUser(context.Background(), &persistence.CreateUserParams{
 			FullName: "Test User",
 			Email:    "teste@user.com",
 		})

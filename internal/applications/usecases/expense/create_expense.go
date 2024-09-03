@@ -23,7 +23,7 @@ func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpen
 		return nil, error_handling.Graphql(ctx, 400, "value_must_be_positive", "Value must be positive", err.Error())
 	}
 
-	returned, err := c.repo.CreateExpense(ctx, persistence.CreateExpenseParams{
+	returned, err := c.repo.CreateExpense(ctx, &persistence.CreateExpenseParams{
 		Description: expenseEntity.Description,
 		Value:       expenseEntity.Value,
 		UserID:      userid,

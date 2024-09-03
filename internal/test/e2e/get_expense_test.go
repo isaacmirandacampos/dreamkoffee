@@ -1,4 +1,4 @@
-package test
+package e2e_test
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/isaacmirandacampos/dreamkoffee/internal/infrastructure/database/postgres/persistence"
+	"github.com/isaacmirandacampos/dreamkoffee/internal/test"
 	"github.com/isaacmirandacampos/dreamkoffee/internal/test/helper"
 	"github.com/isaacmirandacampos/dreamkoffee/pkg/scalar"
 	"github.com/stretchr/testify/assert"
@@ -13,15 +14,18 @@ import (
 
 func TestGetExpense(t *testing.T) {
 	t.Parallel()
-	Server, database, close := TestWithServerAndDB()
+	Server, database, close := test.TestWithServerAndDB()
 	defer close()
+	type dataResponse struct {
+		GetExpense persistence.Expense `json:"getExpense"`
+	}
 	t.Run("get_a_existent_expense", func(t *testing.T) {
 		price, err := scalar.UnmarshalDecimal(100)
 		if err != nil {
 			t.Fatalf("Could not unmarshal decimal: %v", err)
 		}
 		ctx := context.Background()
-		result, err := database.Repo.CreateExpense(ctx, persistence.CreateExpenseParams{
+		result, err := database.Repo.CreateExpense(ctx, &persistence.CreateExpenseParams{
 			Description: "Test Expense",
 			Value:       price,
 		})
@@ -39,15 +43,15 @@ func TestGetExpense(t *testing.T) {
 		defer resp.Body.Close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		var response struct {
-			Data struct {
-				GetExpense persistence.Expense `json:"getExpense"`
-			} `json:"data"`
+			Errors helper.ResponseError `json:"errors"`
+			Data   *dataResponse        `json:"data"`
 		}
 		err = helper.TransformBody(resp.Body, &response)
 		assert.NoError(t, err)
 		expense := response.Data.GetExpense
 		assert.Equal(t, result.ID, expense.ID)
 		assert.Equal(t, "Test Expense", expense.Description)
+		assert.Empty(t, response.Errors)
 	})
 
 	t.Run("get_a_non_existent_expense", func(t *testing.T) {
@@ -59,7 +63,10 @@ func TestGetExpense(t *testing.T) {
 		assert.NoError(t, err)
 		defer close()
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		response := helper.ErrorResponse{}
+		var response struct {
+			Errors helper.ResponseError `json:"errors"`
+			Data   *dataResponse        `json:"data"`
+		}
 		err = helper.TransformBody(resp.Body, &response)
 		assert.NoError(t, err)
 		assert.Equal(t, "Expense not found", response.Errors[0].Message)

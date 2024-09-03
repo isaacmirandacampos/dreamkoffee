@@ -18,7 +18,7 @@ func migration(database *sql.DB) {
 	}
 
 	cwd, _ := os.Getwd()
-	migrationPath := filepath.Join(cwd, "../infrastructure/database/postgres/migration")
+	migrationPath := filepath.Join(cwd, "../../infrastructure/database/postgres/migration")
 	migrationSource := "file://" + migrationPath
 
 	migrator, err := migrate.NewWithDatabaseInstance(migrationSource, "postgres", driver)
