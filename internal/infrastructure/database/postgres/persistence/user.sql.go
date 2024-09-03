@@ -24,7 +24,7 @@ type CreateUserParams struct {
 	Password sql.NullString `db:"password" json:"password"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
+func (q *Queries) CreateUser(ctx context.Context, arg *CreateUserParams) (*User, error) {
 	row := q.db.QueryRowContext(ctx, createUser, arg.FullName, arg.Email, arg.Password)
 	var i User
 	err := row.Scan(
@@ -36,7 +36,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.UpdatedAt,
 		&i.DeletedAt,
 	)
-	return i, err
+	return &i, err
 }
 
 const existsAnUserUsingTheSameEmail = `-- name: ExistsAnUserUsingTheSameEmail :one
@@ -54,7 +54,7 @@ const getLastUser = `-- name: GetLastUser :one
 SELECT id, full_name, email, password, created_at, updated_at, deleted_at FROM users where deleted_at is null ORDER BY id desc LIMIT 1
 `
 
-func (q *Queries) GetLastUser(ctx context.Context) (User, error) {
+func (q *Queries) GetLastUser(ctx context.Context) (*User, error) {
 	row := q.db.QueryRowContext(ctx, getLastUser)
 	var i User
 	err := row.Scan(
@@ -66,14 +66,14 @@ func (q *Queries) GetLastUser(ctx context.Context) (User, error) {
 		&i.UpdatedAt,
 		&i.DeletedAt,
 	)
-	return i, err
+	return &i, err
 }
 
 const getUser = `-- name: GetUser :one
 SELECT id, full_name, email, password, created_at, updated_at, deleted_at FROM users WHERE id = $1 and deleted_at is null
 `
 
-func (q *Queries) GetUser(ctx context.Context, id int32) (User, error) {
+func (q *Queries) GetUser(ctx context.Context, id int32) (*User, error) {
 	row := q.db.QueryRowContext(ctx, getUser, id)
 	var i User
 	err := row.Scan(
@@ -85,14 +85,14 @@ func (q *Queries) GetUser(ctx context.Context, id int32) (User, error) {
 		&i.UpdatedAt,
 		&i.DeletedAt,
 	)
-	return i, err
+	return &i, err
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
 SELECT id, full_name, email, password, created_at, updated_at, deleted_at FROM users WHERE email = $1 and deleted_at is null
 `
 
-func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error) {
+func (q *Queries) GetUserByEmail(ctx context.Context, email string) (*User, error) {
 	row := q.db.QueryRowContext(ctx, getUserByEmail, email)
 	var i User
 	err := row.Scan(
@@ -104,5 +104,5 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 		&i.UpdatedAt,
 		&i.DeletedAt,
 	)
-	return i, err
+	return &i, err
 }

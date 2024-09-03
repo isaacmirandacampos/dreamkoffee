@@ -9,17 +9,17 @@ import (
 )
 
 type Querier interface {
-	CreateExpense(ctx context.Context, arg CreateExpenseParams) (Expense, error)
-	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
-	DeleteExpense(ctx context.Context, id int32) (Expense, error)
+	CreateExpense(ctx context.Context, arg *CreateExpenseParams) (*Expense, error)
+	CreateUser(ctx context.Context, arg *CreateUserParams) (*User, error)
+	DeleteExpense(ctx context.Context, id int32) (*Expense, error)
 	ExistsAnUserUsingTheSameEmail(ctx context.Context, email string) (bool, error)
-	GetExpense(ctx context.Context, id int32) (Expense, error)
-	GetLastExpense(ctx context.Context) (Expense, error)
-	GetLastUser(ctx context.Context) (User, error)
-	GetUser(ctx context.Context, id int32) (User, error)
-	GetUserByEmail(ctx context.Context, email string) (User, error)
-	ListExpenses(ctx context.Context) ([]Expense, error)
-	UpdateExpense(ctx context.Context, arg UpdateExpenseParams) (Expense, error)
+	GetExpense(ctx context.Context, id int32) (*Expense, error)
+	GetLastExpense(ctx context.Context) (*Expense, error)
+	GetLastUser(ctx context.Context) (*User, error)
+	GetUser(ctx context.Context, id int32) (*User, error)
+	GetUserByEmail(ctx context.Context, email string) (*User, error)
+	ListExpenses(ctx context.Context) ([]*Expense, error)
+	UpdateExpense(ctx context.Context, arg *UpdateExpenseParams) (*Expense, error)
 }
 
 var _ Querier = (*Queries)(nil)

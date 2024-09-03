@@ -36,10 +36,10 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // CreateExpense mocks base method.
-func (m *MockRepository) CreateExpense(ctx context.Context, arg persistence.CreateExpenseParams) (persistence.Expense, error) {
+func (m *MockRepository) CreateExpense(ctx context.Context, arg *persistence.CreateExpenseParams) (*persistence.Expense, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateExpense", ctx, arg)
-	ret0, _ := ret[0].(persistence.Expense)
+	ret0, _ := ret[0].(*persistence.Expense)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -51,10 +51,10 @@ func (mr *MockRepositoryMockRecorder) CreateExpense(ctx, arg interface{}) *gomoc
 }
 
 // CreateUser mocks base method.
-func (m *MockRepository) CreateUser(ctx context.Context, arg persistence.CreateUserParams) (persistence.User, error) {
+func (m *MockRepository) CreateUser(ctx context.Context, arg *persistence.CreateUserParams) (*persistence.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateUser", ctx, arg)
-	ret0, _ := ret[0].(persistence.User)
+	ret0, _ := ret[0].(*persistence.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -66,10 +66,10 @@ func (mr *MockRepositoryMockRecorder) CreateUser(ctx, arg interface{}) *gomock.C
 }
 
 // DeleteExpense mocks base method.
-func (m *MockRepository) DeleteExpense(ctx context.Context, id int32) (persistence.Expense, error) {
+func (m *MockRepository) DeleteExpense(ctx context.Context, id int32) (*persistence.Expense, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteExpense", ctx, id)
-	ret0, _ := ret[0].(persistence.Expense)
+	ret0, _ := ret[0].(*persistence.Expense)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -96,10 +96,10 @@ func (mr *MockRepositoryMockRecorder) ExistsAnUserUsingTheSameEmail(ctx, email i
 }
 
 // GetExpense mocks base method.
-func (m *MockRepository) GetExpense(ctx context.Context, id int32) (persistence.Expense, error) {
+func (m *MockRepository) GetExpense(ctx context.Context, id int32) (*persistence.Expense, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetExpense", ctx, id)
-	ret0, _ := ret[0].(persistence.Expense)
+	ret0, _ := ret[0].(*persistence.Expense)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -111,10 +111,10 @@ func (mr *MockRepositoryMockRecorder) GetExpense(ctx, id interface{}) *gomock.Ca
 }
 
 // GetLastExpense mocks base method.
-func (m *MockRepository) GetLastExpense(ctx context.Context) (persistence.Expense, error) {
+func (m *MockRepository) GetLastExpense(ctx context.Context) (*persistence.Expense, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetLastExpense", ctx)
-	ret0, _ := ret[0].(persistence.Expense)
+	ret0, _ := ret[0].(*persistence.Expense)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -126,10 +126,10 @@ func (mr *MockRepositoryMockRecorder) GetLastExpense(ctx interface{}) *gomock.Ca
 }
 
 // GetLastUser mocks base method.
-func (m *MockRepository) GetLastUser(ctx context.Context) (persistence.User, error) {
+func (m *MockRepository) GetLastUser(ctx context.Context) (*persistence.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetLastUser", ctx)
-	ret0, _ := ret[0].(persistence.User)
+	ret0, _ := ret[0].(*persistence.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -141,10 +141,10 @@ func (mr *MockRepositoryMockRecorder) GetLastUser(ctx interface{}) *gomock.Call 
 }
 
 // GetUser mocks base method.
-func (m *MockRepository) GetUser(ctx context.Context, id int32) (persistence.User, error) {
+func (m *MockRepository) GetUser(ctx context.Context, id int32) (*persistence.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUser", ctx, id)
-	ret0, _ := ret[0].(persistence.User)
+	ret0, _ := ret[0].(*persistence.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -156,10 +156,10 @@ func (mr *MockRepositoryMockRecorder) GetUser(ctx, id interface{}) *gomock.Call 
 }
 
 // GetUserByEmail mocks base method.
-func (m *MockRepository) GetUserByEmail(ctx context.Context, email string) (persistence.User, error) {
+func (m *MockRepository) GetUserByEmail(ctx context.Context, email string) (*persistence.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserByEmail", ctx, email)
-	ret0, _ := ret[0].(persistence.User)
+	ret0, _ := ret[0].(*persistence.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -171,10 +171,10 @@ func (mr *MockRepositoryMockRecorder) GetUserByEmail(ctx, email interface{}) *go
 }
 
 // ListExpenses mocks base method.
-func (m *MockRepository) ListExpenses(ctx context.Context) ([]persistence.Expense, error) {
+func (m *MockRepository) ListExpenses(ctx context.Context) ([]*persistence.Expense, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListExpenses", ctx)
-	ret0, _ := ret[0].([]persistence.Expense)
+	ret0, _ := ret[0].([]*persistence.Expense)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -186,10 +186,10 @@ func (mr *MockRepositoryMockRecorder) ListExpenses(ctx interface{}) *gomock.Call
 }
 
 // UpdateExpense mocks base method.
-func (m *MockRepository) UpdateExpense(ctx context.Context, arg persistence.UpdateExpenseParams) (persistence.Expense, error) {
+func (m *MockRepository) UpdateExpense(ctx context.Context, arg *persistence.UpdateExpenseParams) (*persistence.Expense, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateExpense", ctx, arg)
-	ret0, _ := ret[0].(persistence.Expense)
+	ret0, _ := ret[0].(*persistence.Expense)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
