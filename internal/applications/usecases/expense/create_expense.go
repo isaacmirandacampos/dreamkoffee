@@ -11,14 +11,17 @@ import (
 )
 
 func (c *expenseUseCase) CreateExpense(ctx context.Context, input model.NewExpense) (*model.Expense, error) {
-	userid := middleware.GetUserID(ctx)
+	userid, err := middleware.GetUserID(ctx)
+	if err != nil {
+		return nil, error_handling.Graphql(ctx, 401, "unauthorized", "Unauthorized", err)
+	}
 	expenseEntity := entity.NewExpense(
 		&entity.Expense{
 			Description: input.Description,
 			Value:       input.Value,
 		},
 	)
-	err := expenseEntity.ValueIsValid()
+	err = expenseEntity.ValueIsValid()
 	if err != nil {
 		return nil, error_handling.Graphql(ctx, 400, "value_must_be_positive", "Value must be positive", err.Error())
 	}

@@ -22,8 +22,7 @@ func TestCreateExpense(t *testing.T) {
 	mockRepo := mocks.NewMockRepository(ctrl)
 	repository := helper.RepositoryMock(mockRepo)
 	useCase := expense.NewExpenseUseCase(&repository)
-	ctx := context.Background()
-
+	userId := int32(1)
 	t.Run("Should create a expense", func(t *testing.T) {
 		value, err := scalar.UnmarshalDecimal("5.0")
 		assert.NoError(t, err)
@@ -31,7 +30,7 @@ func TestCreateExpense(t *testing.T) {
 			Description: "Coffee",
 			Value:       value,
 		}
-		expectedExpense := persistence.Expense{
+		expectedExpense := &persistence.Expense{
 			ID:          1,
 			Description: "Coffee",
 			Value:       value,
@@ -39,9 +38,10 @@ func TestCreateExpense(t *testing.T) {
 			UpdatedAt:   time.Now(),
 		}
 
+		ctx := context.Background()
 		mockRepo.EXPECT().CreateExpense(ctx, gomock.Any()).Times(1).Return(expectedExpense, nil)
-
-		result, err := useCase.CreateExpense(ctx, input)
+		authCTX := helper.Auth(ctx, userId)
+		result, err := useCase.CreateExpense(authCTX, input)
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
 		assert.Equal(t, int(expectedExpense.ID), result.ID)
@@ -58,7 +58,9 @@ func TestCreateExpense(t *testing.T) {
 			Description: "Coffee",
 			Value:       value,
 		}
-		_, err = useCase.CreateExpense(ctx, input)
+		ctx := context.Background()
+		authCTX := helper.Auth(ctx, userId)
+		_, err = useCase.CreateExpense(authCTX, input)
 		assert.EqualError(t, err, "input: Value must be positive")
 	})
 
@@ -69,8 +71,10 @@ func TestCreateExpense(t *testing.T) {
 			Description: "Coffee",
 			Value:       value,
 		}
+		ctx := context.Background()
 		mockRepo.EXPECT().CreateExpense(ctx, gomock.Any()).Times(1).Return(persistence.Expense{}, errors.New("Invalid input"))
-		result, err := useCase.CreateExpense(ctx, input)
+		authCTX := helper.Auth(ctx, userId)
+		result, err := useCase.CreateExpense(authCTX, input)
 		if err == nil {
 			t.Fatalf("Was expected error")
 		}

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	"github.com/isaacmirandacampos/dreamkoffee/pkg/auth"
@@ -27,6 +28,11 @@ func Auth(next http.Handler) http.Handler {
 	})
 }
 
-func GetUserID(ctx context.Context) int32 {
-	return ctx.Value(userIDKey).(int32)
+func GetUserID(ctx context.Context) (int32, error) {
+	const userIDKey = contextKey("userID")
+	id, ok := ctx.Value(userIDKey).(int32)
+	if !ok {
+		return 0, errors.New("userID not found in context")
+	}
+	return id, nil
 }
